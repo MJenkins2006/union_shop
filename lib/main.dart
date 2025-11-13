@@ -232,8 +232,9 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-
+            
             // Products Section
+            // Portsmouth City Collection
             Container(
               color: Colors.white,
               child: Padding(
@@ -241,7 +242,7 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const Text(
-                      'PRODUCTS SECTION',
+                      'PORTSMOUTH CITY COLLECTION',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.black,
@@ -258,28 +259,28 @@ class HomeScreen extends StatelessWidget {
                       mainAxisSpacing: 48,
                       children: const [
                         ProductCard(
-                          title: 'Placeholder Product 1',
-                          price: '£10.00',
+                          title: 'Portsmouth City Postcard',
+                          price: '£1.00',
+                          imageUrl:
+                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_720x.jpg?v=1752232561',
+                        ),
+                        ProductCard(
+                          title: 'Portsmouth City Magnet',
+                          price: '£4.50',
                           imageUrl:
                               'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
                         ),
                         ProductCard(
-                          title: 'Placeholder Product 2',
-                          price: '£15.00',
+                          title: 'Portsmouth City Bookmark',
+                          price: '£3.00',
                           imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityBookmark1_720x.jpg?v=1752230004',
                         ),
                         ProductCard(
-                          title: 'Placeholder Product 3',
-                          price: '£20.00',
+                          title: 'Portsmouth City Notebook',
+                          price: '£7.50',
                           imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                        ),
-                        ProductCard(
-                          title: 'Placeholder Product 4',
-                          price: '£25.00',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityNotebook_540x.jpg?v=1757419215',
                         ),
                       ],
                     ),
