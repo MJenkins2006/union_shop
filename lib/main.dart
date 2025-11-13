@@ -260,13 +260,13 @@ class HomeScreen extends StatelessWidget {
                       children: const [
                         ProductCard(
                           title: 'Limited Edition Essential Zip Hoodies',
-                          price: '£14.99',
+                          price: '£20.00 £14.99',
                           imageUrl:
                               'https://shop.upsu.net/cdn/shop/files/Pink_Essential_Hoodie_2a3589c2-096f-479f-ac60-d41e8a853d04_720x.jpg?v=1749131089',
                         ),
                         ProductCard(
                           title: 'Essential T-Shirt',
-                          price: '£6.99',
+                          price: '£10.00 £6.99',
                           imageUrl:
                               'https://shop.upsu.net/cdn/shop/files/Sage_T-shirt_720x.png?v=1759827236',
                         ),
@@ -439,10 +439,37 @@ class ProductCard extends StatelessWidget {
                 maxLines: 2,
               ),
               const SizedBox(height: 4),
-              Text(
-                price,
-                style: const TextStyle(fontSize: 13, color: Colors.grey),
-              ),
+              // Strikethrough on multiple values
+              Builder(builder: (context) {
+                final prices = price.split(' ');
+                String oldPrices = '';
+                for (var i = 0; i < prices.length - 1; i++) {
+                  oldPrices += '${prices[i]} ';
+                }
+                if (prices.length != 1) {
+                  return Row(
+                    children: [
+                      Text(
+                        oldPrices,
+                        style: 
+                          const TextStyle(fontSize: 13, color: Colors.grey,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                      Text(
+                        prices[prices.length - 1],
+                        style:
+                            const TextStyle(fontSize: 13, color: Colors.grey),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Text(
+                    price,
+                    style: const TextStyle(fontSize: 13, color: Colors.grey),
+                  );
+                }
+              }),
             ],
           ),
         ],
