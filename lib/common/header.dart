@@ -62,15 +62,25 @@ Widget buildHeader(BuildContext context) {
                   ),
                 ),
                 const SizedBox(width: 16),
-                TextButton(onPressed: () => navigateToHome(context), child: const Text('Home')),
+                TextButton(
+                    onPressed: () => navigateToHome(context),
+                    child: const Text('Home')),
                 const SizedBox(width: 16),
-                TextButton(onPressed: () => placeholderCallbackForButtons(), child: const Text('Shop')),
+                TextButton(
+                    onPressed: () => placeholderCallbackForButtons(),
+                    child: const Text('Shop')),
                 const SizedBox(width: 16),
-                TextButton(onPressed: () => placeholderCallbackForButtons(), child: const Text('The Print Shack')),
+                TextButton(
+                    onPressed: () => placeholderCallbackForButtons(),
+                    child: const Text('The Print Shack')),
                 const SizedBox(width: 16),
-                TextButton(onPressed: () => placeholderCallbackForButtons(), child: const Text('SALE!')),
+                TextButton(
+                    onPressed: () => placeholderCallbackForButtons(),
+                    child: const Text('SALE!')),
                 const SizedBox(width: 16),
-                TextButton(onPressed: () => navigateToAbout(context), child: const Text('About')),
+                TextButton(
+                    onPressed: () => navigateToAbout(context),
+                    child: const Text('About')),
                 const Spacer(),
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 600),
