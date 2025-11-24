@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             // Header
             Container(
-              height: 100,
+              height: 120,
               color: Colors.white,
               child: Column(
                 children: [
@@ -91,6 +91,16 @@ class HomeScreen extends StatelessWidget {
                               },
                             ),
                           ),
+                          const SizedBox(width: 16),
+                          TextButton(onPressed: () => navigateToHome(context), child: const Text('Home')),
+                          const SizedBox(width: 16),
+                          TextButton(onPressed: () => placeholderCallbackForButtons(), child: const Text('Shop')),
+                          const SizedBox(width: 16),
+                          TextButton(onPressed: () => placeholderCallbackForButtons(), child: const Text('The Print Shack')),
+                          const SizedBox(width: 16),
+                          TextButton(onPressed: () => placeholderCallbackForButtons(), child: const Text('SALE!')),
+                          const SizedBox(width: 16),
+                          TextButton(onPressed: () => placeholderCallbackForButtons(), child: const Text('About')),
                           const Spacer(),
                           ConstrainedBox(
                             constraints: const BoxConstraints(maxWidth: 600),
