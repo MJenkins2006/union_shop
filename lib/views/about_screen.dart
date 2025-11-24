@@ -19,8 +19,11 @@ class AboutScreen extends StatelessWidget {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
-            const Text(
-              '''
+            
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: const Text(
+                '''
 Welcome to the Union Shop!
 
 We're dedicated to giving you the very best University branded products, with a range of clothing and merchandise available to shop all year round! We even offer an exclusive personalisation service!
@@ -32,7 +35,13 @@ We hope you enjoy our products as much as we enjoy offering them to you. If you 
 Happy shopping!
 
 The Union Shop & Reception Team
-            ''')
+            ''',
+                style: TextStyle(fontSize: 16, height: 1.5),
+                textAlign: TextAlign.left,),
+            ),
+            const SizedBox(height: 24),
+            // Footer
+            buildFooter(context),
           ],
         ),
       ),
