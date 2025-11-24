@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
+import 'package:union_shop/views/about_screen.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -19,9 +20,10 @@ class UnionShopApp extends StatelessWidget {
       home: const HomeScreen(),
       // By default, the app starts at the '/' route, which is the HomeScreen
       initialRoute: '/',
-      // When navigating to '/product', build and return the ProductPage
-      // In your browser, try this link: http://localhost:49856/#/product
-      routes: {'/product': (context) => const ProductPage()},
+      routes: {
+        '/product': (context) => const ProductPage(),
+        '/about': (context) => const AboutScreen(),
+      },
     );
   }
 }
@@ -35,6 +37,10 @@ class HomeScreen extends StatelessWidget {
 
   void navigateToProduct(BuildContext context) {
     Navigator.pushNamed(context, '/product');
+  }
+
+  void navigateToAbout(BuildContext context) {
+    Navigator.pushNamed(context, '/about');
   }
 
   void placeholderCallbackForButtons() {
@@ -100,7 +106,7 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(width: 16),
                           TextButton(onPressed: () => placeholderCallbackForButtons(), child: const Text('SALE!')),
                           const SizedBox(width: 16),
-                          TextButton(onPressed: () => placeholderCallbackForButtons(), child: const Text('About')),
+                          TextButton(onPressed: () => navigateToAbout(context), child: const Text('About')),
                           const Spacer(),
                           ConstrainedBox(
                             constraints: const BoxConstraints(maxWidth: 600),
