@@ -104,3 +104,40 @@ flutter analyze
 flutter test test/home_test.dart
 flutter run -d chrome
 ```
+
+---
+
+# Collections Screen — Filter & Sort Prompt (for another LLM)
+
+I currently have a `Collections` screen that builds its content by looping over a list and creating `CollectionCard` widgets for each item. I want to add UI for filtering and sorting the displayed collections.
+
+Requirements:
+
+- Add a responsive control area at the top of the `Collections` screen that includes:
+	- A drop-down or segmented control to choose sorting order: `A → Z` and `Z → A`.
+	- A set of filter chips to filter collections (e.g., by category or tag). Do not include a free-text search field — filtering must be driven by selectable chips only.
+	- A clear / reset option to remove filters and return to the default sort.
+- The collection list should update live as the user changes filters or sort order without rebuilding the entire screen.
+- Keep the existing `CollectionCard` widgets and overall page structure; the LLM should suggest only UI additions and small data transformations (e.g., creating a filtered/sorted view of the existing list).
+- Use responsive layout so the controls are horizontal on wide screens and stack vertically or wrap on narrow screens (use `LayoutBuilder`, `Wrap`, `MediaQuery` as appropriate).
+- Preserve accessibility and minimum tappable sizes (>= 44x44 logical pixels).
+- Prefer Flutter built-in widgets (`DropdownButton`, `ChoiceChip`, `TextField`, `ListView.builder`, etc.) and avoid introducing new packages.
+
+Integration notes for the developer:
+
+-- The LLM's suggested code should assume the `Collections` screen already has a `List<CollectionModel> collections` or similar as its source. Provide a snippet that derives `List<CollectionModel> visible = applyFiltersAndSort(collections, sortOrder, activeFilters);` prior to building the list. (No search query parameter should be used.)
+- Keep state management minimal: `StatefulWidget` with local `setState` updates is acceptable. If proposing a provider/riverpod approach, include a short migration note.
+- Ensure the filtering/sorting functions are pure and testable (return new lists, do not mutate the source list).
+
+Acceptance criteria:
+
+- The `Collections` screen shows sorting and filtering controls at the top.
+- Tapping or selecting controls instantly updates the visible `CollectionCard` widgets.
+- On narrow screens controls wrap/stack without overflow and remain usable.
+- No breaking changes to existing navigation or `CollectionCard` API.
+ - A `Return to Home` button is present below the `CollectionCard` list and above the footer; tapping it navigates to the Home screen (use the existing `navigateToHome` helper or `Navigator.pushNamed` as appropriate).
+
+Testing guidance:
+
+- Manual: open the Collections screen in Chrome with narrow and wide widths, test sorting and filtering UI, ensure no overflow.
+- Automated: recommend unit tests for the pure `applyFiltersAndSort` function (input list, order, filters → expected output).
