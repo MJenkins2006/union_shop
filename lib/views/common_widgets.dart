@@ -225,7 +225,8 @@ Widget buildHeaderMobile(BuildContext context) {
                       onPressed: placeholderCallbackForButtons,
                       tooltip: 'Search',
                       padding: const EdgeInsets.all(8),
-                      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                      constraints:
+                          const BoxConstraints(minWidth: 44, minHeight: 44),
                     ),
                   ),
                   SizedBox(
@@ -236,7 +237,8 @@ Widget buildHeaderMobile(BuildContext context) {
                       onPressed: placeholderCallbackForButtons,
                       tooltip: 'Account',
                       padding: const EdgeInsets.all(8),
-                      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                      constraints:
+                          const BoxConstraints(minWidth: 44, minHeight: 44),
                     ),
                   ),
                   SizedBox(
@@ -247,7 +249,8 @@ Widget buildHeaderMobile(BuildContext context) {
                       onPressed: placeholderCallbackForButtons,
                       tooltip: 'Bag',
                       padding: const EdgeInsets.all(8),
-                      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                      constraints:
+                          const BoxConstraints(minWidth: 44, minHeight: 44),
                     ),
                   ),
                   SizedBox(
@@ -265,7 +268,8 @@ Widget buildHeaderMobile(BuildContext context) {
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const Divider(),
                                       ListTile(
@@ -340,12 +344,15 @@ Widget buildFooterDesktop(BuildContext context) {
   return Container(
     padding: const EdgeInsets.all(16),
     width: double.infinity,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.start,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Column(children: [
-          Text("""
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Column(children: [
+              Text("""
 Opening Hours
 
 ❄️ Winter Break Closure Dates ❄️
@@ -359,35 +366,80 @@ Monday - Friday 10am - 4pm
 Monday - Friday 10am - 3pm
 Purchase online 24/7
 """),
-        ]),
-        const Column(children: [
-          Text("""
+            ]),
+            const Column(children: [
+              Text("""
 Search
 
 Terms & Conditions of Sale Policy
 """)
-        ]),
-        Column(children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Latest Offers'),
-              const SizedBox(
-                width: 150,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Email Address',
+            ]),
+            Column(children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Latest Offers'),
+                  const SizedBox(
+                    width: 150,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Email Address',
+                      ),
+                    ),
                   ),
+                  ElevatedButton(
+                    onPressed: placeholderCallbackForButtons,
+                    child: const Text('SUBSCRIBE'),
+                  ),
+                ],
+              )
+            ]),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: placeholderCallbackForButtons,
+              child: Image.network(
+                'https://cdn-icons-png.flaticon.com/512/733/733547.png',
+                width: 28,
+                height: 28,
+                fit: BoxFit.contain,
+                errorBuilder: (c, e, s) => Container(
+                  width: 28,
+                  height: 28,
+                  color: Colors.grey[300],
+                  child: const Icon(Icons.facebook, size: 18),
                 ),
               ),
-              ElevatedButton(
-                onPressed: placeholderCallbackForButtons,
-                child: const Text('SUBSCRIBE'),
+            ),
+            const SizedBox(width: 12),
+            GestureDetector(
+              onTap: placeholderCallbackForButtons,
+              child: Image.network(
+                'https://cdn-icons-png.flaticon.com/512/733/733579.png',
+                width: 28,
+                height: 28,
+                fit: BoxFit.contain,
+                errorBuilder: (c, e, s) => Container(
+                  width: 28,
+                  height: 28,
+                  color: Colors.grey[300],
+                  child: const Icon(Icons.alternate_email, size: 18),
+                ),
               ),
-            ],
-          )
-        ]),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          '© 2025, upsu-store Powered by Shopify',
+          style: TextStyle(fontSize: 12),
+          textAlign: TextAlign.start,
+        ),
       ],
     ),
   );
@@ -455,6 +507,49 @@ Terms & Conditions of Sale Policy
               ],
             ),
           ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: placeholderCallbackForButtons,
+                child: Image.network(
+                  'https://cdn-icons-png.flaticon.com/512/733/733547.png',
+                  width: 28,
+                  height: 28,
+                  fit: BoxFit.contain,
+                  errorBuilder: (c, e, s) => Container(
+                    width: 28,
+                    height: 28,
+                    color: Colors.grey[300],
+                    child: const Icon(Icons.facebook, size: 18),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              GestureDetector(
+                onTap: placeholderCallbackForButtons,
+                child: Image.network(
+                  'https://cdn-icons-png.flaticon.com/512/733/733579.png',
+                  width: 28,
+                  height: 28,
+                  fit: BoxFit.contain,
+                  errorBuilder: (c, e, s) => Container(
+                    width: 28,
+                    height: 28,
+                    color: Colors.grey[300],
+                    child: const Icon(Icons.alternate_email, size: 18),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const Text(
+            '© 2025, upsu-store Powered by Shopify',
+            style: TextStyle(fontSize: 12),
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     ),
@@ -464,7 +559,7 @@ Terms & Conditions of Sale Policy
 // Responsive footer wrapper: desktop for width >= 600, mobile otherwise.
 Widget buildFooter(BuildContext context) {
   final width = MediaQuery.of(context).size.width;
-  if (width >= 600) {
+  if (width >= 700) {
     return buildFooterDesktop(context);
   }
   return buildFooterMobile(context);
