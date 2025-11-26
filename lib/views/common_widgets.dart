@@ -194,70 +194,6 @@ Widget buildHeaderMobile(BuildContext context) {
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           child: Row(
             children: [
-              SizedBox(
-                width: 44,
-                height: 44,
-                child: IconButton(
-                  icon: const Icon(Icons.menu),
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (ctx) {
-                        return SafeArea(
-                          child: SingleChildScrollView(
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Divider(),
-                                  ListTile(
-                                    title: const Text('Home'),
-                                    onTap: () {
-                                      Navigator.pop(ctx);
-                                      navigateToHome(context);
-                                    },
-                                  ),
-                                  ListTile(
-                                    title: const Text('Shop'),
-                                    onTap: () {
-                                      Navigator.pop(ctx);
-                                      navigateToProduct(context);
-                                    },
-                                  ),
-                                  ListTile(
-                                    title: const Text('The Print Shack'),
-                                    onTap: () {
-                                      Navigator.pop(ctx);
-                                      placeholderCallbackForButtons();
-                                    },
-                                  ),
-                                  ListTile(
-                                    title: const Text('SALE!'),
-                                    onTap: () {
-                                      Navigator.pop(ctx);
-                                      placeholderCallbackForButtons();
-                                    },
-                                  ),
-                                  ListTile(
-                                    title: const Text('About'),
-                                    onTap: () {
-                                      Navigator.pop(ctx);
-                                      navigateToAbout(context);
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
               const SizedBox(width: 8),
               GestureDetector(
                 onTap: () => navigateToHome(context),
@@ -312,6 +248,70 @@ Widget buildHeaderMobile(BuildContext context) {
                       tooltip: 'Bag',
                       padding: const EdgeInsets.all(8),
                       constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 44,
+                    height: 44,
+                    child: IconButton(
+                      icon: const Icon(Icons.menu),
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (ctx) {
+                            return SafeArea(
+                              child: SingleChildScrollView(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Divider(),
+                                      ListTile(
+                                        title: const Text('Home'),
+                                        onTap: () {
+                                          Navigator.pop(ctx);
+                                          navigateToHome(context);
+                                        },
+                                      ),
+                                      ListTile(
+                                        title: const Text('Shop'),
+                                        onTap: () {
+                                          Navigator.pop(ctx);
+                                          navigateToProduct(context);
+                                        },
+                                      ),
+                                      ListTile(
+                                        title: const Text('The Print Shack'),
+                                        onTap: () {
+                                          Navigator.pop(ctx);
+                                          placeholderCallbackForButtons();
+                                        },
+                                      ),
+                                      ListTile(
+                                        title: const Text('SALE!'),
+                                        onTap: () {
+                                          Navigator.pop(ctx);
+                                          placeholderCallbackForButtons();
+                                        },
+                                      ),
+                                      ListTile(
+                                        title: const Text('About'),
+                                        onTap: () {
+                                          Navigator.pop(ctx);
+                                          navigateToAbout(context);
+                                        },
+                                      ),
+                                      const SizedBox(height: 16),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
                     ),
                   ),
                 ],
