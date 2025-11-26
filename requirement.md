@@ -109,3 +109,67 @@ If modifying other files becomes necessary (for example integrating a `Drawer` r
 	- Keep changes localized to `home_screen.dart`; only modify other files when strictly necessary and document why.
 	- Ensure no overflow on very small widths or landscape mobile orientations.
 	- Maintain app theme styling (colors/fonts) unless a minor change is required to prevent overflow.
+
+---
+
+# Collections Screen — Filter & Sort Requirements
+
+- **Goal**: Add responsive, accessible filtering and sorting controls to the existing `Collections` screen so users can quickly narrow and reorder the visible collections without rebuilding the full screen.
+
+- **Primary file to edit**: `lib/views/collections_screen.dart`. Keep changes minimal and local; make the screen a `StatefulWidget` only if needed for local state (filters/sort). Do not modify `CollectionCard` API or the underlying data model unless strictly necessary.
+
+- **Controls & Behavior**:
+	- **Sorting**: Provide a control to choose sort order with two options: `A → Z` and `Z → A` (use `DropdownButton` or `PopupMenuButton` on narrow screens, or `ToggleButtons`/segmented control on wide screens). Default is `A → Z`.
+	- **Filtering**: Display a set of selectable filter chips (`ChoiceChip` or `FilterChip`) representing categories/tags derived from available collection data. Support multiple simultaneous filters (multi-select).
+	- **Clear / Reset**: Include a clear or reset action that removes all active filters and returns sorting to default.
+	- **Live updates**: Changing filters or sort order updates the visible list immediately using local state (`setState`) without rebuilding or re-fetching the entire page.
+
+- **Layout & Responsiveness**:
+	- On **wide screens** the controls appear in a single horizontal row with sorting and the chips aligned.
+	- On **narrow screens** the controls wrap or stack vertically using `Wrap` or `LayoutBuilder` to avoid overflow; ensure no horizontal scrolling is required to reach controls.
+	- Maintain minimum tappable area sizes (>= 44x44 logical pixels) for chips and control buttons.
+
+- **Implementation details**:
+	- Derive the visible list with a pure helper function, e.g. `List<CollectionModel> applyFiltersAndSort(List<CollectionModel> all, SortOrder order, Set<String> filters)` which returns a new list and does not mutate the source.
+	- Keep the existing `List<CollectionModel> collections` source intact; compute `visible = applyFiltersAndSort(collections, sortOrder, activeFilters)` before building the `ListView.builder`.
+	- Use efficient UI updates: only call `setState` to update local `sortOrder` and `activeFilters` and let the helper recompute `visible`.
+
+- **Accessibility**:
+	- Make chips and the sorting control reachable by keyboard and provide `Semantics` labels (e.g., "Filter by X", "Sort order dropdown").
+	- Ensure controls have readable labels and focus indicators.
+
+- **Return to Home**:
+	- Add a `Return to Home` button below the collection list and above the footer. Use the existing `navigateToHome` helper or `Navigator.pushNamed` as appropriate.
+
+- **Acceptance criteria**:
+	- Sorting control offers `A → Z` and `Z → A` and updates list immediately when changed.
+	- Filter chips reflect available categories/tags and selecting chips filters the visible `CollectionCard` widgets live.
+	- Controls wrap or stack on narrow screens and remain usable (no overflow). Minimum tappable areas are preserved.
+	- `applyFiltersAndSort` is pure and unit-testable; no mutation of original `collections` list.
+	- A `Return to Home` button is present and navigates home.
+
+- **Testing & Verification (PowerShell)**:
+	- From project root:
+
+```powershell
+flutter analyze
+flutter test
+flutter run -d chrome
+```
+
+	- Manual checks:
+		- On wide and narrow viewports verify controls layout (horizontal vs wrapped/stacked).
+		- Select filters and sort orders and verify the list updates immediately and correctly.
+		- Tap `Return to Home` and verify navigation.
+
+- **Automated tests recommended**:
+	- Unit tests for `applyFiltersAndSort` covering combinations of filters and both sort orders.
+	- Widget tests that pump `Collections` screen, simulate selecting chips and dropdown changes, and assert visible `CollectionCard` count and order.
+
+- **Edge cases & constraints**:
+	- Do not change the `CollectionCard` constructor or public API.
+	- Handle empty `visible` lists gracefully with a friendly empty-state message and a `Return to Home` button.
+	- Ensure the controls remain usable in landscape mobile orientations and on very small widths.
+	- Avoid introducing new dependencies; use Flutter built-in widgets.
+
+---
