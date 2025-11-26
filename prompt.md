@@ -1,4 +1,3 @@
-
 # Responsive Header & Footer — Edit Instructions for LLM
 
 ## Task
@@ -69,3 +68,39 @@ flutter run -d chrome
 - Keep accessibility and touch sizes in mind.
 
 ---
+
+# 3-Slide Carousel Prompt (for another LLM)
+
+Please add the following task at the top of `HomeScreen` in `lib/views/home_screen.dart`.
+
+- Goal: Create a responsive, accessible carousel with exactly three slides positioned at the top of the `HomeScreen`.
+	- Slide A (keep): Essential Range — reuse the existing slide/widget already present in the project.
+	- Slide B: About Us — visually similar card with title/subtitle; tapping the slide navigates to `lib/views/about_screen.dart`.
+	- Slide C: Collections — full-bleed image loaded from `assets/images/collections.jpg`; tapping the slide navigates to `lib/views/collections_screen.dart` (create a minimal placeholder screen if missing).
+
+- Implementation guidance:
+	- Use a `PageView` with a `PageController` (no extra package required). Add visible page indicator dots below the carousel (e.g., `AnimatedContainer` or small indicators row).
+	- Keep the carousel full-width with a fixed aspect ratio (recommend `AspectRatio(aspectRatio: 16/7)`).
+	- Support swipe gestures and (optionally) autoplay that advances every ~4 seconds using a `Timer` and `PageController`.
+	- Provide accessibility `Semantics` labels for each slide (e.g., "Essential Range slide", "About Us slide", "Collections slide").
+	- Use `Navigator.of(context).push(...)` to navigate to the About and Collections screens. Reuse existing navigation functions where appropriate.
+	- Keep styling consistent with the app theme (use `Theme.of(context)` text styles and colors).
+
+- Files to touch:
+	- `lib/views/home_screen.dart` — add a `TopCarousel` widget or inline `PageView` that contains the three slides. Reuse existing Essential Range UI as the first child.
+	- `lib/views/collections_screen.dart` — add a minimal placeholder screen if the app doesn't already have one.
+	- `pubspec.yaml` — add `assets/images/collections.jpg` under `flutter/assets:` (instruct the developer to add the actual image file into the repo).
+
+- Quick acceptance criteria:
+	- Carousel is at the top of `HomeScreen`, full-width and responsive.
+	- There are exactly three slides as described.
+	- Tapping About navigates to `about_screen.dart`; tapping Collections navigates to `collections_screen.dart`.
+	- Page indicator updates correctly and autoplay advances pages roughly every 4s if enabled.
+
+- Quick test/run commands (PowerShell):
+```powershell
+flutter pub get
+flutter analyze
+flutter test test/home_test.dart
+flutter run -d chrome
+```
