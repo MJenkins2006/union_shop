@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:union_shop/common/header.dart';
-import 'package:union_shop/common/footer.dart';
+import 'package:union_shop/views/common_widgets.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
