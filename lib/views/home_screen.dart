@@ -470,7 +470,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton(
-                      onPressed: () => print('Browse Collection pressed'),
+                      onPressed: () => Navigator.pushNamed(context, '/collections'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4d2963),
                         foregroundColor: Colors.white,

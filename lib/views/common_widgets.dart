@@ -9,7 +9,9 @@ Widget buildHeaderDesktop(BuildContext context) {
   void navigateToProduct(BuildContext context) {
     Navigator.pushNamed(context, '/product');
   }
-
+  void navigateToCollections(BuildContext context) {
+    Navigator.pushNamed(context, '/collections');
+  }
   void navigateToAbout(BuildContext context) {
     Navigator.pushNamed(context, '/about');
   }
@@ -162,6 +164,10 @@ Widget buildHeaderMobile(BuildContext context) {
     Navigator.pushNamed(context, '/product');
   }
 
+  void navigateToCollections(BuildContext context) {
+    Navigator.pushNamed(context, '/collections');
+  }
+
   void navigateToAbout(BuildContext context) {
     Navigator.pushNamed(context, '/about');
   }
@@ -283,7 +289,7 @@ Widget buildHeaderMobile(BuildContext context) {
                                         title: const Text('Shop'),
                                         onTap: () {
                                           Navigator.pop(ctx);
-                                          navigateToProduct(context);
+                                          navigateToCollections(context);
                                         },
                                       ),
                                       ListTile(
