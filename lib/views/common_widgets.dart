@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget buildHeader(BuildContext context) {
+// Desktop-oriented header preserved from previous implementation.
+Widget buildHeaderDesktop(BuildContext context) {
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
@@ -151,7 +152,189 @@ Widget buildHeader(BuildContext context) {
   );
 }
 
-Widget buildFooter(BuildContext context) {
+// Mobile header implementation: compact logo + hamburger that opens a modal drawer.
+Widget buildHeaderMobile(BuildContext context) {
+  void navigateToHome(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+  }
+
+  void navigateToProduct(BuildContext context) {
+    Navigator.pushNamed(context, '/product');
+  }
+
+  void navigateToAbout(BuildContext context) {
+    Navigator.pushNamed(context, '/about');
+  }
+
+  void placeholderCallbackForButtons() {
+    print('Button pressed');
+  }
+
+  return Container(
+    color: Colors.white,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Banner scaled down
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+          color: const Color(0xFF4d2963),
+          child: const FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF!',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          ),
+        ),
+        // Main row with hamburger and compact logo
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 44,
+                height: 44,
+                child: IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (ctx) {
+                        return SafeArea(
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Divider(),
+                                  ListTile(
+                                    title: const Text('Home'),
+                                    onTap: () {
+                                      Navigator.pop(ctx);
+                                      navigateToHome(context);
+                                    },
+                                  ),
+                                  ListTile(
+                                    title: const Text('Shop'),
+                                    onTap: () {
+                                      Navigator.pop(ctx);
+                                      navigateToProduct(context);
+                                    },
+                                  ),
+                                  ListTile(
+                                    title: const Text('The Print Shack'),
+                                    onTap: () {
+                                      Navigator.pop(ctx);
+                                      placeholderCallbackForButtons();
+                                    },
+                                  ),
+                                  ListTile(
+                                    title: const Text('SALE!'),
+                                    onTap: () {
+                                      Navigator.pop(ctx);
+                                      placeholderCallbackForButtons();
+                                    },
+                                  ),
+                                  ListTile(
+                                    title: const Text('About'),
+                                    onTap: () {
+                                      Navigator.pop(ctx);
+                                      navigateToAbout(context);
+                                    },
+                                  ),
+                                  const SizedBox(height: 16),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              GestureDetector(
+                onTap: () => navigateToHome(context),
+                child: SizedBox(
+                  width: 44,
+                  height: 44,
+                  child: Image.network(
+                    'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
+                    fit: BoxFit.contain,
+                    errorBuilder: (c, e, s) => Container(
+                      color: Colors.grey[300],
+                      width: 44,
+                      height: 44,
+                      child: const Icon(Icons.image_not_supported),
+                    ),
+                  ),
+                ),
+              ),
+              const Spacer(),
+              // Keep action icons visible outside the drawer on mobile (accessible, >=44x44)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 44,
+                    height: 44,
+                    child: IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: placeholderCallbackForButtons,
+                      tooltip: 'Search',
+                      padding: const EdgeInsets.all(8),
+                      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 44,
+                    height: 44,
+                    child: IconButton(
+                      icon: const Icon(Icons.person_outline),
+                      onPressed: placeholderCallbackForButtons,
+                      tooltip: 'Account',
+                      padding: const EdgeInsets.all(8),
+                      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 44,
+                    height: 44,
+                    child: IconButton(
+                      icon: const Icon(Icons.shopping_bag_outlined),
+                      onPressed: placeholderCallbackForButtons,
+                      tooltip: 'Bag',
+                      padding: const EdgeInsets.all(8),
+                      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+// Responsive wrapper: preserves desktop for width >= 600, mobile otherwise.
+Widget buildHeader(BuildContext context) {
+  final width = MediaQuery.of(context).size.width;
+  if (width >= 600) {
+    return buildHeaderDesktop(context);
+  }
+  return buildHeaderMobile(context);
+}
+
+// Desktop footer preserved as the original layout.
+Widget buildFooterDesktop(BuildContext context) {
   void placeholderCallbackForButtons() {}
 
   return Container(
@@ -164,6 +347,7 @@ Widget buildFooter(BuildContext context) {
         const Column(children: [
           Text("""
 Opening Hours
+
 ❄️ Winter Break Closure Dates ❄️
 Closing 4pm 19/12/2025
 Reopening 10am 05/01/2026
@@ -207,4 +391,81 @@ Terms & Conditions of Sale Policy
       ],
     ),
   );
+}
+
+// Mobile footer: stacked columns, subscription input expands full width, scrollable if needed.
+Widget buildFooterMobile(BuildContext context) {
+  void placeholderCallbackForButtons() {}
+
+  return Container(
+    padding: const EdgeInsets.all(12),
+    width: double.infinity,
+    child: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              """
+Opening Hours
+
+❄️ Winter Break Closure Dates ❄️
+Closing 4pm 19/12/2025
+Reopening 10am 05/01/2026
+Last post date: 12pm on 18/12/2025
+------------------------
+(Term Time)
+Monday - Friday 10am - 4pm
+(Outside of Term Time / Consolidation Weeks)
+Monday - Friday 10am - 3pm
+Purchase online 24/7
+""",
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text("""
+Search
+
+Terms & Conditions of Sale Policy
+"""),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Latest Offers'),
+                const SizedBox(height: 8),
+                const TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Email Address',
+                  ),
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: placeholderCallbackForButtons,
+                    child: const Text('SUBSCRIBE'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+// Responsive footer wrapper: desktop for width >= 600, mobile otherwise.
+Widget buildFooter(BuildContext context) {
+  final width = MediaQuery.of(context).size.width;
+  if (width >= 600) {
+    return buildFooterDesktop(context);
+  }
+  return buildFooterMobile(context);
 }
