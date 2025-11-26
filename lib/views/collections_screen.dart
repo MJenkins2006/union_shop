@@ -6,6 +6,24 @@ class CollectionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final collections = [
+      {
+        'title': 'Saless & Offers',
+        'imageUrl':
+            'https://shop.upsu.net/cdn/shop/files/Pink_Essential_Hoodie_2a3589c2-096f-479f-ac60-d41e8a853d04_720x.jpg?v=1749131089',
+      },
+      {
+        'title': 'Magnets',
+        'imageUrl':
+            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+      },
+      {
+        'title': 'Clothes',
+        'imageUrl':
+            'https://shop.upsu.net/cdn/shop/files/Signature_T-Shirt_Indigo_Blue_2_1080x.jpg?v=1758290534',
+      },
+    ];
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -29,22 +47,12 @@ class CollectionsScreen extends StatelessWidget {
                         MediaQuery.of(context).size.width > 600 ? 2 : 1,
                     crossAxisSpacing: 24,
                     mainAxisSpacing: 48,
-                    children: const [
-                      CollectionCard(
-                        title: 'Saless & Offers',
-                        imageUrl:
-                            'https://shop.upsu.net/cdn/shop/files/Pink_Essential_Hoodie_2a3589c2-096f-479f-ac60-d41e8a853d04_720x.jpg?v=1749131089',
-                      ),
-                      CollectionCard(
-                        title: 'Magnets',
-                        imageUrl:
-                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                      ),
-                      CollectionCard(
-                        title: 'Clothes',
-                        imageUrl:
-                            'https://shop.upsu.net/cdn/shop/files/Signature_T-Shirt_Indigo_Blue_2_1080x.jpg?v=1758290534',
-                      ),
+                    children: [
+                      for (var item in collections)
+                        CollectionCard(
+                          title: item['title']!,
+                          imageUrl: item['imageUrl']!,
+                        ),
                     ],
                   ),
                 ),
