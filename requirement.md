@@ -60,3 +60,52 @@ flutter run -d chrome
 ---
 
 If modifying other files becomes necessary (for example integrating a `Drawer` requires a `Scaffold` change), document the exact file(s) changed and the rationale in the final patch notes.
+
+---
+
+# 3-Slide Carousel — Requirements
+
+- **Goal**: Add a responsive, accessible carousel at the top of `HomeScreen` (`lib/views/home_screen.dart`) with exactly three slides:
+	- Slide 1: Essential Range — reuse the existing slide/widget already present in the project.
+	- Slide 2: About Us — a card-like slide with title/subtitle; tapping the slide navigates to `lib/views/about_screen.dart`.
+	- Slide 3: Collections — a full-bleed image loaded from `assets/images/collections.jpg`; tapping the slide navigates to `lib/views/collections_screen.dart` (create a minimal placeholder if missing).
+
+- **Primary file to edit**: `lib/views/home_screen.dart`. Minimal additions allowed to `pubspec.yaml` (asset reference) and `lib/views/collections_screen.dart` (placeholder) only if necessary.
+
+- **Layout & Behavior**:
+	- Use a `PageView` with a `PageController` (no external packages required). Add visible page indicator dots below the carousel.
+	- Keep the carousel full-width at the top of the screen and maintain a fixed aspect ratio (recommend `AspectRatio(aspectRatio: 16/7)`).
+	- Support swipe gestures and optionally autoplay (advance every ~4s) implemented with a `Timer` and `PageController`.
+	- Provide `Semantics` labels for each slide for accessibility.
+
+- **Navigation & Integration**:
+	- Use existing Navigator patterns (e.g., `Navigator.of(context).push(...)`) or existing navigation helper functions where appropriate.
+	- Do not rename or remove `navigateToHome`, `navigateToProduct`, or `navigateToAbout`.
+
+- **Accessibility & Touch Targets**:
+	- Ensure tappable areas are at least 44x44 logical pixels.
+	- Slides should include semantic descriptions for screen readers.
+
+- **Assets**:
+	- Add `assets/images/collections.jpg` to `pubspec.yaml` under `flutter/assets:`; the binary image file should be added to the repo by the implementer.
+
+- **Acceptance Criteria**:
+	- Carousel is visible at the top of `HomeScreen` and contains exactly three slides as described.
+	- Tapping the About slide navigates to `about_screen.dart`.
+	- Tapping the Collections slide navigates to `collections_screen.dart`.
+	- Page indicator updates when swiping; autoplay advances pages roughly every 4s if enabled.
+	- No analyzer errors introduced.
+
+- **Testing & Verification (PowerShell)**:
+	```powershell
+	flutter pub get
+	flutter analyze
+	flutter test test/home_test.dart
+	flutter run -d chrome
+	```
+	- Suggested test: pump `HomeScreen` and assert a `PageView` with 3 children exists; simulate taps on slides and assert navigation.
+
+- **Edge Cases & Constraints**:
+	- Keep changes localized to `home_screen.dart`; only modify other files when strictly necessary and document why.
+	- Ensure no overflow on very small widths or landscape mobile orientations.
+	- Maintain app theme styling (colors/fonts) unless a minor change is required to prevent overflow.
