@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "810339922844",
+    "project_id": "studentunion-158b7",
+    "storage_bucket": "studentunion-158b7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810339922844:android:60a2722b722d4f8c3ece59",
+        "android_client_info": {
+          "package_name": "com.example.union_shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810339922844-9m32jm6v2mbfdjncs5prnq5f7suf9v4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDivJ9F50i3zYRbZLYUHwn3xSeqN9uOGJ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810339922844-9m32jm6v2mbfdjncs5prnq5f7suf9v4a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
