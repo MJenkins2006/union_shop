@@ -126,6 +126,17 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
                 ),
               ),
             ),
+            ElevatedButton(
+              onPressed: () {
+              Navigator.pushNamed(context, '/');
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF4d2963),
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Return home'),
+            ),
+            const SizedBox(height: 24),
             // Footer
             buildFooter(context),
           ],
