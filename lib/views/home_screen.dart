@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:union_shop/views/common_widgets.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -336,7 +337,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton(
-                      onPressed: () => print('Browse Collection pressed'),
+                      onPressed: () => context.go('/collections/sales'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4d2963),
                         foregroundColor: Colors.white,
@@ -403,7 +404,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton(
-                      onPressed: () => Navigator.pushNamed(context, '/about'),
+                      onPressed: () => context.go('/about'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4d2963),
                         foregroundColor: Colors.white,
@@ -470,7 +471,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton(
-                      onPressed: () => Navigator.pushNamed(context, '/collections'),
+                      onPressed: () => context.go('/collections'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4d2963),
                         foregroundColor: Colors.white,

@@ -4,6 +4,7 @@ import 'package:union_shop/views/about_screen.dart';
 import 'package:union_shop/views/home_screen.dart';
 import 'package:union_shop/views/collections_screen.dart';
 import 'package:union_shop/views/collection_screen.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -14,27 +15,43 @@ class UnionShopApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final GoRouter router = GoRouter(
+      initialLocation: '/',
+      routes: <GoRoute>[
+        GoRoute(
+          path: '/',
+          builder: (context, state) => const HomeScreen(),
+        ),
+        GoRoute(
+          path: '/product',
+          builder: (context, state) => const ProductPage(),
+        ),
+        GoRoute(
+          path: '/about',
+          builder: (context, state) => const AboutScreen(),
+        ),
+        GoRoute(
+          path: '/collections',
+          builder: (context, state) => const CollectionsScreen(),
+        ),
+        GoRoute(
+          path: '/collections/:id',
+          builder: (context, state) {
+            final rawId = state.pathParameters['id'] ?? '';
+            final id = Uri.decodeComponent(rawId);
+            return CollectionScreen(id: id);
+          },
+        ),
+      ],
+    );
+
+    return MaterialApp.router(
       title: 'Union Shop',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
       ),
-      home: const HomeScreen(),
-      // By default, the app starts at the '/' route, which is the HomeScreen
-      initialRoute: '/',
-      routes: {
-        '/product': (context) => const ProductPage(),
-        '/about': (context) => const AboutScreen(),
-        '/collections': (context) => const CollectionsScreen(),
-      },
-      onGenerateRoute: (collection) {
-        final uri = Uri.parse(collection.name!);
-        return MaterialPageRoute(
-            builder: (context) => CollectionScreen(id: Uri.decodeComponent(uri.pathSegments[1])),
-            settings: collection,
-          );
-        }
+      routerConfig: router,
     );
   }
 }

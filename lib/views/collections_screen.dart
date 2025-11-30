@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/views/common_widgets.dart';
 import 'package:union_shop/database.dart';
+import 'package:go_router/go_router.dart';
 
 enum SortOrder { aToZ, zToA }
 
@@ -111,7 +112,7 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-              Navigator.pushNamed(context, '/');
+              context.go('/');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF4d2963),
@@ -143,8 +144,7 @@ class CollectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        final encodedCollection = Uri.encodeComponent(collection);
-        Navigator.pushNamed(context, '/collections/${encodedCollection.toLowerCase()}');
+        context.go('/collections/${Uri.encodeComponent(collection).toLowerCase()}');
       },
       child: Stack(
         children: [

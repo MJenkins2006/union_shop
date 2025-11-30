@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 // Desktop-oriented header preserved from previous implementation.
 Widget buildHeaderDesktop(BuildContext context) {
   void navigateToHome(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    context.go('/');
   }
 
   void navigateToProduct(BuildContext context) {
-    Navigator.pushNamed(context, '/product');
+    context.go('/product');
   }
   void navigateToCollections(BuildContext context) {
-    Navigator.pushNamed(context, '/collections');
+    context.go('/collections');
   }
   void navigateToAbout(BuildContext context) {
-    Navigator.pushNamed(context, '/about');
+    context.go('/about');
   }
 
   void placeholderCallbackForButtons() {
@@ -70,7 +71,7 @@ Widget buildHeaderDesktop(BuildContext context) {
                     child: const Text('Home')),
                 const SizedBox(width: 16),
                 TextButton(
-                    onPressed: () => placeholderCallbackForButtons(),
+                    onPressed: () => navigateToCollections(context),
                     child: const Text('Shop')),
                 const SizedBox(width: 16),
                 TextButton(
@@ -78,7 +79,7 @@ Widget buildHeaderDesktop(BuildContext context) {
                     child: const Text('The Print Shack')),
                 const SizedBox(width: 16),
                 TextButton(
-                    onPressed: () => placeholderCallbackForButtons(),
+                    onPressed: () => context.go('/collections/sales'),
                     child: const Text('SALE!')),
                 const SizedBox(width: 16),
                 TextButton(
@@ -157,19 +158,19 @@ Widget buildHeaderDesktop(BuildContext context) {
 // Mobile header implementation: compact logo + hamburger that opens a modal drawer.
 Widget buildHeaderMobile(BuildContext context) {
   void navigateToHome(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    context.go('/');
   }
 
   void navigateToProduct(BuildContext context) {
-    Navigator.pushNamed(context, '/product');
+    context.go('/product');
   }
 
   void navigateToCollections(BuildContext context) {
-    Navigator.pushNamed(context, '/collections');
+    context.go('/collections');
   }
 
   void navigateToAbout(BuildContext context) {
-    Navigator.pushNamed(context, '/about');
+    context.go('/about');
   }
 
   void placeholderCallbackForButtons() {
@@ -303,7 +304,7 @@ Widget buildHeaderMobile(BuildContext context) {
                                         title: const Text('SALE!'),
                                         onTap: () {
                                           Navigator.pop(ctx);
-                                          placeholderCallbackForButtons();
+                                          context.go('/collections/sales');
                                         },
                                       ),
                                       ListTile(
