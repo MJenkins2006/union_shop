@@ -635,7 +635,7 @@ class ProductCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        prices[prices.length - 1],
+                        '£${prices[prices.length - 1]}',
                         style:
                             const TextStyle(fontSize: 13, color: Colors.grey),
                       ),
@@ -643,7 +643,7 @@ class ProductCard extends StatelessWidget {
                   );
                 } else {
                   return Text(
-                    price,
+                    '£$price',
                     style: const TextStyle(fontSize: 13, color: Colors.grey),
                   );
                 }
