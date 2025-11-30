@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                           if (product['collection'] == 'SALES')
                               ProductCard(
                                 title: product['title'] ?? '',
-                                price: '£${product['price'] ?? ''}',
+                                price: product['price'] ?? '',
                                 imageUrl: product['imageUrl'] ?? '',
                               ),
                       ],
