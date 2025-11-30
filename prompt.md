@@ -141,3 +141,36 @@ Testing guidance:
 
 - Manual: open the Collections screen in Chrome with narrow and wide widths, test sorting and filtering UI, ensure no overflow.
 - Automated: recommend unit tests for the pure `applyFiltersAndSort` function (input list, order, filters → expected output).
+
+---
+
+# Collection Detail Route — Short Prompt (for another LLM)
+
+Make individual collection pages routable and minimal: clicking a collection (e.g., "Cards") should open `/collections/Cards` and show a centered text `Cards page`.
+
+Instructions
+
+- Add or ensure a route that handles `/collections/:id` and instantiates `lib/views/collection_screen.dart` with the `id` parameter. Keep `CollectionScreen({required String id})` as the constructor.
+- Update the Collections list item tap handler so tapping a `CollectionCard` navigates to the collection detail route. Prefer `go_router` if present (example):
+
+	- `context.go('/collections/${Uri.encodeComponent(title)}');`
+
+	Otherwise use named navigation or `onGenerateRoute`:
+
+	- `Navigator.pushNamed(context, '/collections/$title');`
+
+- Decode the route parameter safely when displaying (use `Uri.decodeComponent`) and add a simple `Semantics` label like `"<id> collection page"`.
+- Keep changes minimal and self-contained: add the route (or update router file) and the navigation call in the Collections list.
+
+Deliverables
+
+- Router change adding `/collections/:id` (e.g., in `main.dart` or router file).
+- Ensure `lib/views/collection_screen.dart` reads the `id` and displays `"<id> page"` centered.
+- A short note showing the navigation call added to the `CollectionCard` (example: `onTap: () => context.go('/collections/${title}')`).
+
+Testing
+
+- `flutter pub get` (if router packages changed)
+- `flutter analyze`
+- `flutter test`
+- `flutter run -d chrome` and verify `http://localhost:xxxx/#/collections/Cards` displays `Cards page`.
