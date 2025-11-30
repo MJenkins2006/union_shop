@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                               ProductCard(
                                 collection: product['collection'] ?? '',
                                 product: product['product'] ?? '',
-                                price: '£${product['price'] ?? ''}',
+                                price: product['price'] ?? '',
                                 imageUrl: product['imageUrl'] ?? '',
                               ),
                       ],
@@ -125,7 +125,7 @@ class HomeScreen extends StatelessWidget {
                               ProductCard(
                                 collection: product['collection'] ?? '',
                                 product: product['product'] ?? '',
-                                price: '£${product['price'] ?? ''}',
+                                price: product['price'] ?? '',
                                 imageUrl: product['imageUrl'] ?? '',
                               ),
                       ],
