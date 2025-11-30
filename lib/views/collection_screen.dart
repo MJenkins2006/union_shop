@@ -3,7 +3,7 @@ import 'package:union_shop/views/common_widgets.dart';
 import 'package:union_shop/database.dart';
 import 'package:go_router/go_router.dart';
 
-enum SortOrder { aToZ, zToA }
+enum SortOrder { aToZ, zToA, priceDesc, priceAsc }
 
 class CollectionScreen extends StatefulWidget {
   final String id;
@@ -24,11 +24,32 @@ class _CollectionScreenState extends State<CollectionScreen> {
 
   void _sortProducts() {
     products.sort((a, b) {
-      final at = a['title']!.toLowerCase();
-      final bt = b['title']!.toLowerCase();
-      int cmp = at.compareTo(bt);
-      return _selectedSortOrder == SortOrder.aToZ ? cmp : -cmp;
+      switch (_selectedSortOrder) {
+        case SortOrder.aToZ:
+          final at = a['title']!.toLowerCase();
+          final bt = b['title']!.toLowerCase();
+          return at.compareTo(bt);
+        case SortOrder.zToA:
+          final at = a['title']!.toLowerCase();
+          final bt = b['title']!.toLowerCase();
+          return bt.compareTo(at);
+        case SortOrder.priceAsc:
+          final ap = _parsePrice(a['price']);
+          final bp = _parsePrice(b['price']);
+          return ap.compareTo(bp);
+        case SortOrder.priceDesc:
+          final ap = _parsePrice(a['price']);
+          final bp = _parsePrice(b['price']);
+          return bp.compareTo(ap);
+      }
     });
+  }
+
+  double _parsePrice(String? priceStr) {
+    if (priceStr == null || priceStr.isEmpty) return double.infinity;
+    // Handle cases where there might be a discount (e.g., "20.00 14.99")
+    final parts = priceStr.split(' ');
+    return double.tryParse(parts.last) ?? double.infinity;
   }
 
   List<DropdownMenuItem<SortOrder>> _buildSortEntries() {
@@ -37,6 +58,10 @@ class _CollectionScreenState extends State<CollectionScreen> {
           value: SortOrder.aToZ, child: Text('A to Z', style: TextStyle(fontSize: 14))),
       const DropdownMenuItem<SortOrder>(
           value: SortOrder.zToA, child: Text('Z to A', style: TextStyle(fontSize: 14))),
+      const DropdownMenuItem<SortOrder>(
+          value: SortOrder.priceAsc, child: Text('Price: Low → High', style: TextStyle(fontSize: 14))),
+      const DropdownMenuItem<SortOrder>(
+          value: SortOrder.priceDesc, child: Text('Price: High → Low', style: TextStyle(fontSize: 14))),
     ];
   }
 
@@ -103,7 +128,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                     if (product['collection'] == widget.id.toUpperCase())
                         ProductCard(
                           title: product['title'] ?? '',
-                          price: '£${product['price'] ?? ''}',
+                          price: product['price'] ?? '',
                           imageUrl: product['imageUrl'] ?? '',
                         ),
                   ],
