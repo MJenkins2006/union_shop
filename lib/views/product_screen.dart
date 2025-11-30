@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/views/common_widgets.dart';
 import 'package:union_shop/database.dart';
 
+enum Sizes { S, M, L }
+
 class ProductScreen extends StatefulWidget {
   final String collectionId;
   final String productId;
@@ -13,6 +15,22 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
+
+  List<DropdownMenuItem<Sizes>> _buildSizeEntries() {
+    return [
+      const DropdownMenuItem<Sizes>(
+          value: Sizes.S, child: Text('S', style: TextStyle(fontSize: 14))),
+      const DropdownMenuItem<Sizes>(
+          value: Sizes.M, child: Text('M', style: TextStyle(fontSize: 14))),
+      const DropdownMenuItem<Sizes>(
+          value: Sizes.L, child: Text('L', style: TextStyle(fontSize: 14))),
+    ];
+  }
+
+  Sizes? _selectedSize = Sizes.S;
+  int _quantity = 1;
+  final double _controlHeight = 36.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +103,92 @@ class _ProductScreenState extends State<ProductScreen> {
                             }
                           }),
                           const SizedBox(height: 6),
-                          const Text('Tax included.')
+                          const Text('Tax included.'),
+                          const SizedBox(height: 12),
+
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Text('Size: ', style: TextStyle(fontSize: 16)),
+                              const SizedBox(width: 8),
+                              Container(
+                                height: _controlHeight,
+                                width: 140,
+                                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                alignment: Alignment.centerLeft,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey.shade400),
+                                  borderRadius: BorderRadius.circular(6.0),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<Sizes>(
+                                    menuWidth: 140,
+                                    value: _selectedSize,
+                                    isExpanded: true,
+                                    iconSize: 24,
+                                    style: const TextStyle(fontSize: 14, color: Colors.black),
+                                    items: _buildSizeEntries(),
+                                    onChanged: (Sizes? value) {
+                                      if (value != null) {
+                                        setState(() {
+                                          _selectedSize = value;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              const Text('Quantity: ', style: TextStyle(fontSize: 16)),
+                              const SizedBox(width: 8),
+                              Container(
+                                height: _controlHeight,
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey.shade400),
+                                  borderRadius: BorderRadius.circular(6.0),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          if (_quantity > 1) _quantity--;
+                                        });
+                                      },
+                                      child: const Icon(Icons.remove, size: 18),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text('$_quantity', style: const TextStyle(fontSize: 14)),
+                                    const SizedBox(width: 8),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          _quantity++;
+                                        });
+                                      },
+                                      child: const Icon(Icons.add, size: 18),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ]
+                          ),
+
+                          const SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: () => print('Button pressed'),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 64, vertical: 12.0),
+                            ),
+                            child: const Text('ADD TO CART')),
+
+                          const SizedBox(height: 12),
+
+                          Text(product['description'] ?? ''),
                         ],
                       ),
                     ),
