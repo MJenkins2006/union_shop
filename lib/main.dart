@@ -27,8 +27,14 @@ class UnionShopApp extends StatelessWidget {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutScreen(),
         '/collections': (context) => const CollectionsScreen(),
-        '/collections/:id': (context) => const CollectionScreen(id : ''),
       },
+      onGenerateRoute: (collection) {
+        final uri = Uri.parse(collection.name!);
+        return MaterialPageRoute(
+            builder: (context) => CollectionScreen(id: Uri.decodeComponent(uri.pathSegments[1])),
+            settings: collection,
+          );
+        }
     );
   }
 }

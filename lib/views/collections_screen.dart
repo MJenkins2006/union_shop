@@ -22,8 +22,8 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
 
   void _sortCollections() {
     collections.sort((a, b) {
-      final at = a['title']!.toLowerCase();
-      final bt = b['title']!.toLowerCase();
+      final at = a['collection']!.toLowerCase();
+      final bt = b['collection']!.toLowerCase();
       int cmp = at.compareTo(bt);
       return _selectedSortOrder == SortOrder.aToZ ? cmp : -cmp;
     });
@@ -102,7 +102,7 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
                   children: [
                     for (var item in collections)
                       CollectionCard(
-                        title: item['title']!,
+                        collection: item['collection']!,
                         imageUrl: item['imageUrl']!,
                       ),
                   ],
@@ -130,12 +130,12 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
 }
 
 class CollectionCard extends StatelessWidget {
-  final String title;
+  final String collection;
   final String imageUrl;
 
   const CollectionCard({
     super.key,
-    required this.title,
+    required this.collection,
     required this.imageUrl,
   });
 
@@ -143,7 +143,8 @@ class CollectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product');
+        final encodedCollection = Uri.encodeComponent(collection);
+        Navigator.pushNamed(context, '/collections/${encodedCollection.toLowerCase()}');
       },
       child: Stack(
         children: [
@@ -167,7 +168,7 @@ class CollectionCard extends StatelessWidget {
           Positioned.fill(
             child: Center(
               child: Text(
-                title,
+                collection,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 32,
