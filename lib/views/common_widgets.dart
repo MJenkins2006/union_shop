@@ -590,7 +590,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go('/collections/$collection/$product');
+        context.go('/collections/${collection.toLowerCase()}/${product.toLowerCase()}');
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
