@@ -47,7 +47,8 @@ class HomeScreen extends StatelessWidget {
                         for (var product in products) 
                           if (product['collection'] == 'SALES')
                               ProductCard(
-                                title: product['title'] ?? '',
+                                collection: product['collection'] ?? '',
+                                product: product['product'] ?? '',
                                 price: product['price'] ?? '',
                                 imageUrl: product['imageUrl'] ?? '',
                               ),
@@ -84,7 +85,8 @@ class HomeScreen extends StatelessWidget {
                         for (var product in products) 
                           if (product['collection'] == 'CLOTHES')
                               ProductCard(
-                                title: product['title'] ?? '',
+                                collection: product['collection'] ?? '',
+                                product: product['product'] ?? '',
                                 price: '£${product['price'] ?? ''}',
                                 imageUrl: product['imageUrl'] ?? '',
                               ),
@@ -121,7 +123,8 @@ class HomeScreen extends StatelessWidget {
                         for (var product in products) 
                           if (product['collection'] == 'CARDS')
                               ProductCard(
-                                title: product['title'] ?? '',
+                                collection: product['collection'] ?? '',
+                                product: product['product'] ?? '',
                                 price: '£${product['price'] ?? ''}',
                                 imageUrl: product['imageUrl'] ?? '',
                               ),

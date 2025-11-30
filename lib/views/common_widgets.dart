@@ -573,22 +573,24 @@ Widget buildFooter(BuildContext context) {
 }
 
 class ProductCard extends StatelessWidget {
-  final String title;
+  final String product;
   final String price;
   final String imageUrl;
+  final String collection;
 
   const ProductCard({
     super.key,
-    required this.title,
+    required this.product,
     required this.price,
     required this.imageUrl,
+    required this.collection,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product');
+        context.go('/collections/$collection/$product');
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -612,7 +614,7 @@ class ProductCard extends StatelessWidget {
             children: [
               const SizedBox(height: 4),
               Text(
-                title,
+                product,
                 style: const TextStyle(fontSize: 14, color: Colors.black),
                 maxLines: 2,
               ),

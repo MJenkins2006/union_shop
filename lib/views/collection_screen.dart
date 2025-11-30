@@ -6,8 +6,8 @@ import 'package:go_router/go_router.dart';
 enum SortOrder { aToZ, zToA, priceDesc, priceAsc }
 
 class CollectionScreen extends StatefulWidget {
-  final String id;
-  const CollectionScreen({super.key, required this.id});
+  final String collectionId;
+  const CollectionScreen({super.key, required this.collectionId});
 
   @override
   State<CollectionScreen> createState() => _CollectionScreenState();
@@ -26,12 +26,12 @@ class _CollectionScreenState extends State<CollectionScreen> {
     products.sort((a, b) {
       switch (_selectedSortOrder) {
         case SortOrder.aToZ:
-          final at = a['title']!.toLowerCase();
-          final bt = b['title']!.toLowerCase();
+          final at = a['product']!.toLowerCase();
+          final bt = b['product']!.toLowerCase();
           return at.compareTo(bt);
         case SortOrder.zToA:
-          final at = a['title']!.toLowerCase();
-          final bt = b['title']!.toLowerCase();
+          final at = a['product']!.toLowerCase();
+          final bt = b['product']!.toLowerCase();
           return bt.compareTo(at);
         case SortOrder.priceAsc:
           final ap = _parsePrice(a['price']);
@@ -73,11 +73,11 @@ class _CollectionScreenState extends State<CollectionScreen> {
           children: [
             // Header
             buildHeader(context),
-            Text('${widget.id.toUpperCase()} Collection',
+            Text('${widget.collectionId.toUpperCase()} Collection',
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             for (var collection in collections)
-              if (collection['collection'] == widget.id.toUpperCase())
+              if (collection['collection'] == widget.collectionId.toUpperCase())
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Text(
@@ -134,9 +134,10 @@ class _CollectionScreenState extends State<CollectionScreen> {
                   mainAxisSpacing: 48,
                   children: [
                     for (var product in products)
-                    if (product['collection'] == widget.id.toUpperCase())
+                    if (product['collection'] == widget.collectionId.toUpperCase())
                         ProductCard(
-                          title: product['title'] ?? '',
+                          collection: product['collection'] ?? '',
+                          product: product['product'] ?? '',
                           price: product['price'] ?? '',
                           imageUrl: product['imageUrl'] ?? '',
                         ),
