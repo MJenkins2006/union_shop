@@ -1,16 +1,19 @@
   final List<Map<String, String>> collections = [
     {
       'collection': 'SALES',
+      'description': 'ESSENTIAL RANGE - OVER 20% OFF!',
       'imageUrl':
           'https://shop.upsu.net/cdn/shop/files/Pink_Essential_Hoodie_2a3589c2-096f-479f-ac60-d41e8a853d04_720x.jpg?v=1749131089',
     },
     {
       'collection': 'CARDS',
+      'description': 'POSTCARDS AND MORE!',
       'imageUrl':
           'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
     },
     {
       'collection': 'CLOTHES',
+      'description': 'SIGNATURE RANGE',
       'imageUrl':
           'https://shop.upsu.net/cdn/shop/files/Signature_T-Shirt_Indigo_Blue_2_1080x.jpg?v=1758290534',
     },
@@ -32,6 +35,13 @@
           'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
     },
     {
+      'collection': 'SALES',
+      'title': 'Limited Edition Essential White Hoodies',
+      'price': '22.00 12.99',
+      'imageUrl':
+          'https://shop.upsu.net/cdn/shop/files/Pink_Essential_Hoodie_2a3589c2-096f-479f-ac60-d41e8a853d04_720x.jpg?v=1749131089',
+    },
+    {
       'collection': 'CARDS',
       'title': 'Postcard',
       'price': '2.00',
@@ -41,7 +51,7 @@
     {
       'collection': 'CARDS',
       'title': 'Card',
-      'price': '2.00',
+      'price': '4.00',
       'imageUrl':
           'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
     },

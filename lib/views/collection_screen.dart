@@ -76,6 +76,15 @@ class _CollectionScreenState extends State<CollectionScreen> {
             Text('${widget.id.toUpperCase()} Collection',
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
+            for (var collection in collections)
+              if (collection['collection'] == widget.id.toUpperCase())
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Text(
+                    collection['description'] ?? '',
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ),
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
