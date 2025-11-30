@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:union_shop/product_page.dart';
+import 'package:union_shop/views/product_screen.dart';
 import 'package:union_shop/views/about_screen.dart';
 import 'package:union_shop/views/home_screen.dart';
 import 'package:union_shop/views/collections_screen.dart';
@@ -23,10 +23,6 @@ class UnionShopApp extends StatelessWidget {
           builder: (context, state) => const HomeScreen(),
         ),
         GoRoute(
-          path: '/product',
-          builder: (context, state) => const ProductPage(),
-        ),
-        GoRoute(
           path: '/about',
           builder: (context, state) => const AboutScreen(),
         ),
@@ -35,11 +31,21 @@ class UnionShopApp extends StatelessWidget {
           builder: (context, state) => const CollectionsScreen(),
         ),
         GoRoute(
-          path: '/collections/:id',
+          path: '/collections/:collectionId',
           builder: (context, state) {
-            final rawId = state.pathParameters['id'] ?? '';
-            final id = Uri.decodeComponent(rawId);
-            return CollectionScreen(id: id);
+            final rawCollectionId = state.pathParameters['collectionId'] ?? '';
+            final collectionId = Uri.decodeComponent(rawCollectionId);
+            return CollectionScreen(collectionId: collectionId);
+          },
+        ),
+        GoRoute(
+          path: '/collections/:collectionId/:productId',
+          builder: (context, state) {
+            final rawProductId = state.pathParameters['productId'] ?? '';
+            final productId = Uri.decodeComponent(rawProductId);
+            final rawCollectionId = state.pathParameters['collectionId'] ?? '';
+            final collectionId = Uri.decodeComponent(rawCollectionId);
+            return ProductScreen(collectionId: collectionId, productId: productId);
           },
         ),
       ],
