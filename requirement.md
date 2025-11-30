@@ -173,3 +173,44 @@ flutter run -d chrome
 	- Avoid introducing new dependencies; use Flutter built-in widgets.
 
 ---
+
+	# Collection Detail Route — Requirements
+
+	- **Goal:** Make individual collection pages routable and minimally functional. When a user clicks a collection (for example, "Cards") they should land at `/collections/Cards` and see a centered message `Cards page`.
+
+	- **Primary file(s) to edit:**
+		- Prefer minimal edits: update router definitions (e.g., `main.dart` or your router file) to add a `/collections/:id` handler. Do not restructure unrelated navigation.
+		- Ensure `lib/views/collection_screen.dart` reads an incoming `id` parameter (keep the existing `CollectionScreen({required String id})` API) and displays `"<id> page"` in a centered, accessible `Text` widget.
+
+	- **Routing rules:**
+		- Support a dynamic route `/collections/:id` (URL-encoded). If the project uses `go_router`, add a `GoRoute(path: '/collections/:id', ...)` and use `context.go('/collections/${Uri.encodeComponent(id)}')` from the Collections list. If not using `go_router`, add an `onGenerateRoute` entry or a named route mapping that extracts the `id` segment and constructs `CollectionScreen(id: id)`.
+		- When constructing or displaying the `id`, decode it with `Uri.decodeComponent` for safety.
+
+	- **Collections list navigation:**
+		- Update the `CollectionCard` or collection list `onTap` handler to navigate to the detail route. Prefer the `go_router` call when available:
+
+			- `onTap: () => context.go('/collections/${Uri.encodeComponent(title)}');`
+
+			- Fallback: `Navigator.pushNamed(context, '/collections/$encodedTitle');` with appropriate `onGenerateRoute` handling.
+
+	- **Accessibility:**
+		- Add a `Semantics` label on the detail screen such as `"<id> collection page"` and make sure the central `Text` is reachable by screen readers.
+
+	- **Deliverables:**
+		- Router change (file and minimal diff noted) adding `/collections/:id`.
+		- `lib/views/collection_screen.dart` (or a new `collection_detail_screen.dart`) that reads `id` and shows `"<id> page"` centered.
+		- One-line note showing the exact navigation call added to the collection list (example above).
+
+	- **Acceptance criteria:**
+		- Visiting `/collections/Cards` shows a page with centered text `Cards page`.
+		- Tapping a collection in the Collections screen navigates to the matching URL.
+		- No other navigation routes are broken.
+
+	- **Testing steps (from project root):**
+		- `flutter pub get` (if router package or router files changed)
+		- `flutter analyze`
+		- `flutter test`
+		- `flutter run -d chrome` then visit `http://localhost:xxxx/#/collections/Cards` (replace host/port shown by flutter) and confirm `Cards page` appears.
+
+	- **Notes & constraints:**
+		- Keep changes minimal and local to routing and the collection list handler. Do not rename existing navigation helper functions such as `navigateToHome`, `navigateToProduct`, or `navigateToAbout`.
