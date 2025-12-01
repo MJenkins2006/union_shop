@@ -3,24 +3,6 @@ import 'package:go_router/go_router.dart';
 
 // Desktop-oriented header preserved from previous implementation.
 Widget buildHeaderDesktop(BuildContext context) {
-  void navigateToHome(BuildContext context) {
-    context.go('/');
-  }
-
-  void navigateToProduct(BuildContext context) {
-    context.go('/product');
-  }
-  void navigateToCollections(BuildContext context) {
-    context.go('/collections');
-  }
-  void navigateToAbout(BuildContext context) {
-    context.go('/about');
-  }
-
-  void placeholderCallbackForButtons() {
-    // This is the event handler for buttons that don't work yet
-    print('Button pressed');
-  }
 
   return Container(
     height: 120,
@@ -46,7 +28,7 @@ Widget buildHeaderDesktop(BuildContext context) {
               children: [
                 GestureDetector(
                   onTap: () {
-                    navigateToHome(context);
+                    context.go('/');
                   },
                   child: Image.network(
                     'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
@@ -67,15 +49,15 @@ Widget buildHeaderDesktop(BuildContext context) {
                 ),
                 const SizedBox(width: 16),
                 TextButton(
-                    onPressed: () => navigateToHome(context),
+                    onPressed: () => context.go('/'),
                     child: const Text('Home')),
                 const SizedBox(width: 16),
                 TextButton(
-                    onPressed: () => navigateToCollections(context),
+                    onPressed: () => context.go('/collections'),
                     child: const Text('Shop')),
                 const SizedBox(width: 16),
                 TextButton(
-                    onPressed: () => placeholderCallbackForButtons(),
+                    onPressed: () => () {},
                     child: const Text('The Print Shack')),
                 const SizedBox(width: 16),
                 TextButton(
@@ -83,7 +65,7 @@ Widget buildHeaderDesktop(BuildContext context) {
                     child: const Text('SALE!')),
                 const SizedBox(width: 16),
                 TextButton(
-                    onPressed: () => navigateToAbout(context),
+                    onPressed: () => context.go('/about'),
                     child: const Text('About')),
                 const Spacer(),
                 ConstrainedBox(
@@ -102,7 +84,7 @@ Widget buildHeaderDesktop(BuildContext context) {
                           minWidth: 32,
                           minHeight: 32,
                         ),
-                        onPressed: placeholderCallbackForButtons,
+                        onPressed: () {},
                       ),
                       IconButton(
                         icon: const Icon(
@@ -115,7 +97,7 @@ Widget buildHeaderDesktop(BuildContext context) {
                           minWidth: 32,
                           minHeight: 32,
                         ),
-                        onPressed: placeholderCallbackForButtons,
+                        onPressed: () {},
                       ),
                       IconButton(
                         icon: const Icon(
@@ -128,7 +110,7 @@ Widget buildHeaderDesktop(BuildContext context) {
                           minWidth: 32,
                           minHeight: 32,
                         ),
-                        onPressed: placeholderCallbackForButtons,
+                        onPressed: () {},
                       ),
                       IconButton(
                         icon: const Icon(
@@ -141,7 +123,7 @@ Widget buildHeaderDesktop(BuildContext context) {
                           minWidth: 32,
                           minHeight: 32,
                         ),
-                        onPressed: placeholderCallbackForButtons,
+                        onPressed: () {},
                       ),
                     ],
                   ),
@@ -157,25 +139,6 @@ Widget buildHeaderDesktop(BuildContext context) {
 
 // Mobile header implementation: compact logo + hamburger that opens a modal drawer.
 Widget buildHeaderMobile(BuildContext context) {
-  void navigateToHome(BuildContext context) {
-    context.go('/');
-  }
-
-  void navigateToProduct(BuildContext context) {
-    context.go('/product');
-  }
-
-  void navigateToCollections(BuildContext context) {
-    context.go('/collections');
-  }
-
-  void navigateToAbout(BuildContext context) {
-    context.go('/about');
-  }
-
-  void placeholderCallbackForButtons() {
-    print('Button pressed');
-  }
 
   return Container(
     color: Colors.white,
@@ -203,7 +166,7 @@ Widget buildHeaderMobile(BuildContext context) {
             children: [
               const SizedBox(width: 8),
               GestureDetector(
-                onTap: () => navigateToHome(context),
+                onTap: () => context.go('/'),
                 child: SizedBox(
                   width: 44,
                   height: 44,
@@ -229,7 +192,7 @@ Widget buildHeaderMobile(BuildContext context) {
                     height: 44,
                     child: IconButton(
                       icon: const Icon(Icons.search),
-                      onPressed: placeholderCallbackForButtons,
+                      onPressed: () {},
                       tooltip: 'Search',
                       padding: const EdgeInsets.all(8),
                       constraints:
@@ -241,7 +204,7 @@ Widget buildHeaderMobile(BuildContext context) {
                     height: 44,
                     child: IconButton(
                       icon: const Icon(Icons.person_outline),
-                      onPressed: placeholderCallbackForButtons,
+                      onPressed: () {},
                       tooltip: 'Account',
                       padding: const EdgeInsets.all(8),
                       constraints:
@@ -253,7 +216,7 @@ Widget buildHeaderMobile(BuildContext context) {
                     height: 44,
                     child: IconButton(
                       icon: const Icon(Icons.shopping_bag_outlined),
-                      onPressed: placeholderCallbackForButtons,
+                      onPressed: () {},
                       tooltip: 'Bag',
                       padding: const EdgeInsets.all(8),
                       constraints:
@@ -283,21 +246,21 @@ Widget buildHeaderMobile(BuildContext context) {
                                         title: const Text('Home'),
                                         onTap: () {
                                           Navigator.pop(ctx);
-                                          navigateToHome(context);
+                                          context.go('/');
                                         },
                                       ),
                                       ListTile(
                                         title: const Text('Shop'),
                                         onTap: () {
                                           Navigator.pop(ctx);
-                                          navigateToCollections(context);
+                                          context.go('/collections');
                                         },
                                       ),
                                       ListTile(
                                         title: const Text('The Print Shack'),
                                         onTap: () {
                                           Navigator.pop(ctx);
-                                          placeholderCallbackForButtons();
+                                          () {};
                                         },
                                       ),
                                       ListTile(
@@ -311,7 +274,7 @@ Widget buildHeaderMobile(BuildContext context) {
                                         title: const Text('About'),
                                         onTap: () {
                                           Navigator.pop(ctx);
-                                          navigateToAbout(context);
+                                          context.go('/about');
                                         },
                                       ),
                                       const SizedBox(height: 16),
