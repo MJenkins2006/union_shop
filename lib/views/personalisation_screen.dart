@@ -3,6 +3,8 @@ import 'package:union_shop/views/common_widgets.dart';
 import 'package:union_shop/database.dart';
 import 'package:go_router/go_router.dart';
 
+enum LineCount { one, two , three, four }
+
 class PersonalisationScreen extends StatefulWidget {
   const PersonalisationScreen({super.key});
 
@@ -12,10 +14,23 @@ class PersonalisationScreen extends StatefulWidget {
 
 class _PersonalisationScreenState extends State<PersonalisationScreen> {
 
-  
+  LineCount _selectedLineCount = LineCount.one;
+
+  List<DropdownMenuItem<LineCount>> _buildLineCountEntries() {
+    return [
+      const DropdownMenuItem<LineCount>(
+          value: LineCount.one, child: Text('One', style: TextStyle(fontSize: 14))),
+      const DropdownMenuItem<LineCount>(
+          value: LineCount.two, child: Text('Two', style: TextStyle(fontSize: 14))),
+      const DropdownMenuItem<LineCount>(
+          value: LineCount.three, child: Text('Three', style: TextStyle(fontSize: 14))),
+      const DropdownMenuItem<LineCount>(
+          value: LineCount.four, child: Text('Four', style: TextStyle(fontSize: 14))),
+    ];
+  }
 
   double getTotal() {
-    return 3.0 * _quantity;
+    return (1.0 + (2.0 * (_selectedLineCount.index + 1))) * _quantity;
   }
 
   int _quantity = 1;
@@ -65,6 +80,38 @@ class _PersonalisationScreenState extends State<PersonalisationScreen> {
                           const SizedBox(height: 6),
                           const Text('Tax included.'),
                           const SizedBox(height: 12),
+                          Row(
+                            children: [
+                              const Text('Number of lines: ', style: TextStyle(fontSize: 16)),
+                              const SizedBox(width: 8),
+                              Container(
+                                height: _controlHeight,
+                                width: 140,
+                                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                alignment: Alignment.centerLeft,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey.shade400),
+                                  borderRadius: BorderRadius.circular(6.0),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<LineCount>(
+                                    value: _selectedLineCount,
+                                    isExpanded: true,
+                                    iconSize: 24,
+                                    style: const TextStyle(fontSize: 14, color: Colors.black),
+                                    items: _buildLineCountEntries(),
+                                    onChanged: (LineCount? value) {
+                                      if (value != null) {
+                                        setState(() {
+                                          _selectedLineCount = value;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           Row(
                             children: [
                               const Text('Quantity: ', style: TextStyle(fontSize: 16)),
@@ -117,11 +164,7 @@ class _PersonalisationScreenState extends State<PersonalisationScreen> {
 
                           const Text(
 """
-£3 for one line of text! £5 for two!
-
-One line of text is 10 characters.
-
-Please ensure all spellings are correct before submitting your purchase as we will print your item with the exact wording you provide. We will not be responsible for any incorrect spellings printed onto your garment. Personalised items do not qualify for refunds.
+Please ensure all spellings are correct before submitting your purchase.
 """
                           ),
                         ],
