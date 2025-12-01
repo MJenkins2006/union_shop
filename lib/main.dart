@@ -39,7 +39,7 @@ class UnionShopApp extends StatelessWidget {
           },
         ),
         GoRoute(
-          path: '/collections/:collectionId/:productId',
+          path: '/collections/:collectionId/products/:productId',
           builder: (context, state) {
             final rawProductId = state.pathParameters['productId'] ?? '';
             final productId = Uri.decodeComponent(rawProductId);
