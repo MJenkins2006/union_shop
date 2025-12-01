@@ -15,6 +15,13 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
 
+  List<DropdownMenuItem<String>> _buildColourEntries(List<String> colours) {
+    return colours
+        .map((colour) => DropdownMenuItem<String>(
+            value: colour, child: Text(colour, style: const TextStyle(fontSize: 14))))
+        .toList();
+  }
+
   List<DropdownMenuItem<String>> _buildSizeEntries(List<String> sizes) {
     return sizes
         .map((size) => DropdownMenuItem<String>(
@@ -22,6 +29,7 @@ class _ProductScreenState extends State<ProductScreen> {
         .toList();
   }
 
+  String? _selectedColour;
   String? _selectedSize;
   int _quantity = 1;
   final double _controlHeight = 36.0;
@@ -100,7 +108,57 @@ class _ProductScreenState extends State<ProductScreen> {
                           const SizedBox(height: 6),
                           const Text('Tax included.'),
                           const SizedBox(height: 12),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Builder(builder: (context) {
+                                final coloursList = (product['colours'] ?? '')
+                                    .split(',')
+                                    .map((size) => size.trim())
+                                    .where((size) => size.isNotEmpty)
+                                    .toList();
 
+                                if (coloursList.isEmpty) {
+                                  return const Text('');
+                                }
+
+                                return Row(
+                                  children: [
+                                    const Text('Colour: ', style: TextStyle(fontSize: 16)),
+                                    const SizedBox(width: 8),
+
+                                    Container(
+                                      height: _controlHeight,
+                                      width: 140,
+                                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                      alignment: Alignment.centerLeft,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey.shade400),
+                                        borderRadius: BorderRadius.circular(6.0),
+                                      ),
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton<String>(
+                                          menuWidth: 140,
+                                          value: _selectedColour ?? coloursList[0],
+                                          isExpanded: true,
+                                          iconSize: 24,
+                                          style: const TextStyle(fontSize: 14, color: Colors.black),
+                                          items: _buildColourEntries(coloursList),
+                                          onChanged: (String? value) {
+                                            if (value != null) {
+                                              setState(() {
+                                                _selectedColour = value;
+                                              });
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
+                            ]
+                          ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -150,7 +208,10 @@ class _ProductScreenState extends State<ProductScreen> {
                                   ],
                                 );
                               }),
-                              const SizedBox(width: 16),
+                            ]
+                          ),
+                          Row(
+                            children: [
                               const Text('Quantity: ', style: TextStyle(fontSize: 16)),
                               const SizedBox(width: 8),
                               Container(
@@ -188,8 +249,6 @@ class _ProductScreenState extends State<ProductScreen> {
                               ),
                             ]
                           ),
-
-                          const SizedBox(height: 16),
                           ElevatedButton(
                             onPressed: () => print('Button pressed'),
                             style: ElevatedButton.styleFrom(
