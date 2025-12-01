@@ -3,8 +3,6 @@ import 'package:union_shop/views/common_widgets.dart';
 import 'package:union_shop/database.dart';
 import 'package:go_router/go_router.dart';
 
-enum Sizes { S, M, L }
-
 class ProductScreen extends StatefulWidget {
   final String collectionId;
   final String productId;
@@ -17,18 +15,14 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
 
-  List<DropdownMenuItem<Sizes>> _buildSizeEntries() {
-    return [
-      const DropdownMenuItem<Sizes>(
-          value: Sizes.S, child: Text('S', style: TextStyle(fontSize: 14))),
-      const DropdownMenuItem<Sizes>(
-          value: Sizes.M, child: Text('M', style: TextStyle(fontSize: 14))),
-      const DropdownMenuItem<Sizes>(
-          value: Sizes.L, child: Text('L', style: TextStyle(fontSize: 14))),
-    ];
+  List<DropdownMenuItem<String>> _buildSizeEntries(List<String> sizes) {
+    return sizes
+        .map((size) => DropdownMenuItem<String>(
+            value: size, child: Text(size, style: const TextStyle(fontSize: 14))))
+        .toList();
   }
 
-  Sizes? _selectedSize = Sizes.S;
+  String? _selectedSize;
   int _quantity = 1;
   final double _controlHeight = 36.0;
 
@@ -110,35 +104,52 @@ class _ProductScreenState extends State<ProductScreen> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const Text('Size: ', style: TextStyle(fontSize: 16)),
-                              const SizedBox(width: 8),
-                              Container(
-                                height: _controlHeight,
-                                width: 140,
-                                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                                alignment: Alignment.centerLeft,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey.shade400),
-                                  borderRadius: BorderRadius.circular(6.0),
-                                ),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<Sizes>(
-                                    menuWidth: 140,
-                                    value: _selectedSize,
-                                    isExpanded: true,
-                                    iconSize: 24,
-                                    style: const TextStyle(fontSize: 14, color: Colors.black),
-                                    items: _buildSizeEntries(),
-                                    onChanged: (Sizes? value) {
-                                      if (value != null) {
-                                        setState(() {
-                                          _selectedSize = value;
-                                        });
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ),
+                              Builder(builder: (context) {
+                                final sizesList = (product['sizes'] ?? '')
+                                    .split(',')
+                                    .map((size) => size.trim())
+                                    .where((size) => size.isNotEmpty)
+                                    .toList();
+
+                                if (sizesList.isEmpty) {
+                                  return const Text('');
+                                }
+
+                                return Row(
+                                  children: [
+                                    const Text('Size: ', style: TextStyle(fontSize: 16)),
+                                    const SizedBox(width: 8),
+
+                                    Container(
+                                      height: _controlHeight,
+                                      width: 140,
+                                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                      alignment: Alignment.centerLeft,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey.shade400),
+                                        borderRadius: BorderRadius.circular(6.0),
+                                      ),
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton<String>(
+                                          menuWidth: 140,
+                                          value: _selectedSize ?? sizesList[0],
+                                          isExpanded: true,
+                                          iconSize: 24,
+                                          style: const TextStyle(fontSize: 14, color: Colors.black),
+                                          items: _buildSizeEntries(sizesList),
+                                          onChanged: (String? value) {
+                                            if (value != null) {
+                                              setState(() {
+                                                _selectedSize = value;
+                                              });
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
                               const SizedBox(width: 16),
                               const Text('Quantity: ', style: TextStyle(fontSize: 16)),
                               const SizedBox(width: 8),
