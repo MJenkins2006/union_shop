@@ -4,6 +4,7 @@ import 'package:union_shop/database.dart';
 import 'package:go_router/go_router.dart';
 
 enum SortOrder { aToZ, zToA, priceDesc, priceAsc }
+enum PriceFilter { all, under10, over10 }
 
 class CollectionScreen extends StatefulWidget {
   final String collectionId;
@@ -15,32 +16,49 @@ class CollectionScreen extends StatefulWidget {
 
 class _CollectionScreenState extends State<CollectionScreen> {
   SortOrder _selectedSortOrder = SortOrder.aToZ;
+  PriceFilter _selectedFilter = PriceFilter.all;
+  List<Map<String, dynamic>> _displayedProducts = [];
 
   @override
   void initState() {
     super.initState();
-    _sortProducts();
+    _applyFiltersAndSort();
   }
+  void _applyFiltersAndSort() {
+    // Start from the global products list and filter to the current collection
+    final collectionId = widget.collectionId.toUpperCase();
+    _displayedProducts = products.where((product) => product['collection'] == collectionId).toList();
 
-  void _sortProducts() {
-    products.sort((a, b) {
+    // Apply price filter
+    if (_selectedFilter == PriceFilter.under10) {
+      _displayedProducts = _displayedProducts
+          .where((product) => _parsePrice(product['price']) < 10.0)
+          .toList();
+    } else if (_selectedFilter == PriceFilter.over10) {
+      _displayedProducts = _displayedProducts
+          .where((product) => _parsePrice(product['price']) >= 10.0)
+          .toList();
+    }
+
+    // Apply sort
+    _displayedProducts.sort((leftProduct, rightProduct) {
       switch (_selectedSortOrder) {
         case SortOrder.aToZ:
-          final at = a['product']!.toLowerCase();
-          final bt = b['product']!.toLowerCase();
-          return at.compareTo(bt);
+          final leftName = (leftProduct['product'] ?? '').toString().toLowerCase();
+          final rightName = (rightProduct['product'] ?? '').toString().toLowerCase();
+          return leftName.compareTo(rightName);
         case SortOrder.zToA:
-          final at = a['product']!.toLowerCase();
-          final bt = b['product']!.toLowerCase();
-          return bt.compareTo(at);
+          final leftName = (leftProduct['product'] ?? '').toString().toLowerCase();
+          final rightName = (rightProduct['product'] ?? '').toString().toLowerCase();
+          return rightName.compareTo(leftName);
         case SortOrder.priceAsc:
-          final ap = _parsePrice(a['price']);
-          final bp = _parsePrice(b['price']);
-          return ap.compareTo(bp);
+          final leftPrice = _parsePrice(leftProduct['price']);
+          final rightPrice = _parsePrice(rightProduct['price']);
+          return leftPrice.compareTo(rightPrice);
         case SortOrder.priceDesc:
-          final ap = _parsePrice(a['price']);
-          final bp = _parsePrice(b['price']);
-          return bp.compareTo(ap);
+          final leftPrice = _parsePrice(leftProduct['price']);
+          final rightPrice = _parsePrice(rightProduct['price']);
+          return rightPrice.compareTo(leftPrice);
       }
     });
   }
@@ -62,6 +80,17 @@ class _CollectionScreenState extends State<CollectionScreen> {
           value: SortOrder.priceAsc, child: Text('Price: Low → High', style: TextStyle(fontSize: 14))),
       const DropdownMenuItem<SortOrder>(
           value: SortOrder.priceDesc, child: Text('Price: High → Low', style: TextStyle(fontSize: 14))),
+    ];
+  }
+
+  List<DropdownMenuItem<PriceFilter>> _buildFilterEntries() {
+    return [
+      const DropdownMenuItem<PriceFilter>(
+          value: PriceFilter.all, child: Text('All', style: TextStyle(fontSize: 14))),
+      const DropdownMenuItem<PriceFilter>(
+          value: PriceFilter.under10, child: Text('Under \$10', style: TextStyle(fontSize: 14))),
+      const DropdownMenuItem<PriceFilter>(
+          value: PriceFilter.over10, child: Text('Over \$10', style: TextStyle(fontSize: 14))),
     ];
   }
 
@@ -111,7 +140,36 @@ class _CollectionScreenState extends State<CollectionScreen> {
                           if (value != null) {
                             setState(() {
                               _selectedSortOrder = value;
-                              _sortProducts();
+                              _applyFiltersAndSort();
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 24),
+                  const Text('Filter: '),
+                  const SizedBox(width: 8),
+                  SizedBox(
+                    width: 140,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade400),
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      child: DropdownButton<PriceFilter>(
+                        isExpanded: true,
+                        value: _selectedFilter,
+                        underline: const SizedBox.shrink(),
+                        iconSize: 18,
+                        style: const TextStyle(fontSize: 14, color: Colors.black),
+                        items: _buildFilterEntries(),
+                        onChanged: (PriceFilter? value) {
+                          if (value != null) {
+                            setState(() {
+                              _selectedFilter = value;
+                              _applyFiltersAndSort();
                             });
                           }
                         },
@@ -133,8 +191,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                   crossAxisSpacing: 24,
                   mainAxisSpacing: 48,
                   children: [
-                    for (var product in products)
-                    if (product['collection'] == widget.collectionId.toUpperCase())
+                    for (var product in _displayedProducts)
                         ProductCard(
                           collection: product['collection'] ?? '',
                           product: product['product'] ?? '',
