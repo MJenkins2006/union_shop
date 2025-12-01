@@ -335,10 +335,9 @@ Widget buildHeaderMobile(BuildContext context) {
   );
 }
 
-// Responsive wrapper: preserves desktop for width >= 600, mobile otherwise.
 Widget buildHeader(BuildContext context) {
   final width = MediaQuery.of(context).size.width;
-  if (width >= 600) {
+  if (width >= 750) {
     return buildHeaderDesktop(context);
   }
   return buildHeaderMobile(context);
@@ -563,10 +562,9 @@ Terms & Conditions of Sale Policy
   );
 }
 
-// Responsive footer wrapper: desktop for width >= 600, mobile otherwise.
 Widget buildFooter(BuildContext context) {
   final width = MediaQuery.of(context).size.width;
-  if (width >= 700) {
+  if (width >= 800) {
     return buildFooterDesktop(context);
   }
   return buildFooterMobile(context);
