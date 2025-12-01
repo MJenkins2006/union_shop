@@ -29,6 +29,18 @@ class _ProductScreenState extends State<ProductScreen> {
         .toList();
   }
 
+  double getTotal() {
+    for (var product in products) {
+      if (product['collection'] == widget.collectionId.toUpperCase() &&
+          product['product'] == widget.productId.toUpperCase()) {
+        final price = double.parse(product['price']?.split(' ').last ?? '0');
+        final total = price * _quantity;
+        return total;
+      }
+    }
+    return 0.0;
+  }
+
   String? _selectedColour;
   String? _selectedSize;
   int _quantity = 1;
@@ -255,9 +267,11 @@ class _ProductScreenState extends State<ProductScreen> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 64, vertical: 12.0),
                             ),
-                            child: const Text('ADD TO CART')),
+                            child: Text('ADD £${getTotal()} TO CART'),
+                          ),
 
                           const SizedBox(height: 12),
+
 
                           Text(product['description'] ?? ''),
                         ],
