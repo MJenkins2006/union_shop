@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/views/common_widgets.dart';
 import 'package:union_shop/database.dart';
+import 'package:go_router/go_router.dart';
 
 enum Sizes { S, M, L }
 
@@ -192,6 +193,22 @@ class _ProductScreenState extends State<ProductScreen> {
                         ],
                       ),
                     ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    context.go('/collections/${widget.collectionId.toLowerCase()}');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4d2963),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                  ),
+                  child: Text('Return to ${widget.collectionId}'),
+                ),
+              ),
+            ),
             // Footer
             buildFooter(context),
           ],
