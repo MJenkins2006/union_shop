@@ -3,6 +3,7 @@ import 'package:union_shop/views/product_screen.dart';
 import 'package:union_shop/views/about_screen.dart';
 import 'package:union_shop/views/home_screen.dart';
 import 'package:union_shop/views/collections_screen.dart';
+import 'package:union_shop/views/personalisation_screen.dart';
 import 'package:union_shop/views/collection_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,6 +30,10 @@ class UnionShopApp extends StatelessWidget {
         GoRoute(
           path: '/collections',
           builder: (context, state) => const CollectionsScreen(),
+        ),
+        GoRoute(
+          path: '/personalisation',
+          builder: (context, state) => const PersonalisationScreen(),
         ),
         GoRoute(
           path: '/collections/:collectionId',
