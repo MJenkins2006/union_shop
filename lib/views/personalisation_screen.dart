@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/views/common_widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:union_shop/models/cart_model.dart';
 
 enum LineCount { one, two , three, four }
 
@@ -205,8 +206,15 @@ class _PersonalisationScreenState extends State<PersonalisationScreen> {
                           ),
 
                           ElevatedButton(
-                            onPressed: () => print('Button pressed'),
-                            style: ElevatedButton.styleFrom(
+                            onPressed: () {
+                              final cartItem = CartItem(
+                                name: 'Personalised Item',
+                                price: getTotal(),
+                                quantity: _quantity,
+                              );
+                              CartModel.instance.addItem(cartItem);
+                              context.go('/cart');
+                            },                           style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 64, vertical: 12.0),
                             ),
