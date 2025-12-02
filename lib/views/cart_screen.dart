@@ -29,7 +29,6 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 600;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -146,35 +145,40 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                     const SizedBox(height: 12),
                     Align(
-                      alignment: isMobile ? Alignment.center : Alignment.centerRight,
+                      alignment: Alignment.center,
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(minWidth: 200, maxWidth: 420),
                         child: Card(
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     const Text('Total', style: TextStyle(fontSize: 16)),
+                                    const SizedBox(width: 12),
                                     Text('£${cart.total.toStringAsFixed(2)}', style: const TextStyle(fontSize: 16)),
                                   ],
                                 ),
                                 const SizedBox(height: 12),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    final hadItems = !cart.isEmpty;
-                                    cart.clear();
-                                    if (hadItems) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('Checkout complete')),
-                                      );
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
-                                  child: const Text('Checkout'),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      final hadItems = !cart.isEmpty;
+                                      cart.clear();
+                                      if (hadItems) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Checkout complete')),
+                                        );
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
+                                    child: const Text('Checkout'),
+                                  ),
                                 ),
                               ],
                             ),
