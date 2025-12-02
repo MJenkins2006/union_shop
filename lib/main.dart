@@ -7,6 +7,7 @@ import 'package:union_shop/views/personalisation_screen.dart';
 import 'package:union_shop/views/personalisation_about_screen.dart';
 import 'package:union_shop/views/collection_screen.dart';
 import 'package:union_shop/views/cart_screen.dart';
+import 'package:union_shop/views/authentication.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
@@ -40,6 +41,10 @@ class UnionShopApp extends StatelessWidget {
         GoRoute(
           path: '/personalisation/about',
           builder: (context, state) => const PersonalisationAboutScreen(),
+        ),
+        GoRoute(
+          path: '/signup',
+          builder: (context, state) => const SignUpScreen(),
         ),
         GoRoute(
           path: '/collections/:collectionId',
