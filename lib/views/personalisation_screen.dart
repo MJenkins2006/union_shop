@@ -97,8 +97,8 @@ class _PersonalisationScreenState extends State<PersonalisationScreen> {
                             width: double.infinity,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
-                              child: Image.network(
-                                'https://shop.upsu.net/cdn/shop/products/Personalised_Image_720x.jpg?v=1562949869',
+                              child: Image.asset(
+                                'assets/images/personalisation.jpg',
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
                                   return Container(

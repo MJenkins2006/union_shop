@@ -189,8 +189,8 @@ class _HeroCarouselState extends State<HeroCarousel> {
                 child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                        'https://shop.upsu.net/cdn/shop/files/Signature_T-Shirt_Indigo_Blue_2_360x.jpg',
+                      image: AssetImage(
+                        'assets/images/sales_t_shirt.jpg',
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -256,8 +256,8 @@ class _HeroCarouselState extends State<HeroCarousel> {
                 child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                        'https://shop.upsu.net/cdn/shop/files/SageHoodie_720x.png?v=1745583498',
+                      image: AssetImage(
+                        'assets/images/cards_card.jpg',
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -323,8 +323,8 @@ class _HeroCarouselState extends State<HeroCarousel> {
                 child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                        'https://shop.upsu.net/cdn/shop/files/Hoodie_180x.jpg',
+                      image: AssetImage(
+                        'assets/images/clothes_hoodies.jpg',
                       ),
                       fit: BoxFit.cover,
                     ),

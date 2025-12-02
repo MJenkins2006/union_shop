@@ -69,7 +69,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             width: double.infinity,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
-                              child: Image.network(
+                              child: Image.asset(
                                 product['imageUrl'] ?? '',
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {

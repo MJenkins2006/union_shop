@@ -152,7 +152,7 @@ class CollectionCard extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
+                  image: AssetImage(
                     imageUrl,
                   ),
                   fit: BoxFit.cover,
