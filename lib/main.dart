@@ -43,6 +43,10 @@ class UnionShopApp extends StatelessWidget {
           builder: (context, state) => const PersonalisationAboutScreen(),
         ),
         GoRoute(
+          path: '/signin',
+          builder: (context, state) => const SignInScreen(),
+        ),
+        GoRoute(
           path: '/signup',
           builder: (context, state) => const SignUpScreen(),
         ),
