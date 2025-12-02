@@ -57,7 +57,7 @@ Widget buildHeaderDesktop(BuildContext context) {
                     child: const Text('Shop')),
                 const SizedBox(width: 16),
                 TextButton(
-                    onPressed: () => () {},
+                    onPressed: () => context.go('/personalisation'),
                     child: const Text('The Print Shack')),
                 const SizedBox(width: 16),
                 TextButton(
@@ -260,7 +260,7 @@ Widget buildHeaderMobile(BuildContext context) {
                                         title: const Text('The Print Shack'),
                                         onTap: () {
                                           Navigator.pop(ctx);
-                                          () {};
+                                          context.go('/personalisation');
                                         },
                                       ),
                                       ListTile(
