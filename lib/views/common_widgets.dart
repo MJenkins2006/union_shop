@@ -97,7 +97,7 @@ Widget buildHeaderDesktop(BuildContext context) {
                           minWidth: 32,
                           minHeight: 32,
                         ),
-                        onPressed: () {},
+                        onPressed: () => context.go('/signin'),
                       ),
                       IconButton(
                         icon: const Icon(
@@ -204,7 +204,7 @@ Widget buildHeaderMobile(BuildContext context) {
                     height: 44,
                     child: IconButton(
                       icon: const Icon(Icons.person_outline),
-                      onPressed: () {},
+                      onPressed: () => context.go('/signin'),
                       tooltip: 'Account',
                       padding: const EdgeInsets.all(8),
                       constraints:
@@ -372,34 +372,12 @@ Terms & Conditions of Sale Policy
           children: [
             GestureDetector(
               onTap: placeholderCallbackForButtons,
-              child: Image.network(
-                'https://cdn-icons-png.flaticon.com/512/733/733547.png',
-                width: 28,
-                height: 28,
-                fit: BoxFit.contain,
-                errorBuilder: (c, e, s) => Container(
-                  width: 28,
-                  height: 28,
-                  color: Colors.grey[300],
-                  child: const Icon(Icons.facebook, size: 18),
-                ),
-              ),
+              child: const Icon(Icons.facebook, size: 18),
             ),
             const SizedBox(width: 12),
             GestureDetector(
               onTap: placeholderCallbackForButtons,
-              child: Image.network(
-                'https://cdn-icons-png.flaticon.com/512/733/733579.png',
-                width: 28,
-                height: 28,
-                fit: BoxFit.contain,
-                errorBuilder: (c, e, s) => Container(
-                  width: 28,
-                  height: 28,
-                  color: Colors.grey[300],
-                  child: const Icon(Icons.alternate_email, size: 18),
-                ),
-              ),
+              child: const Icon(Icons.alternate_email, size: 18),
             ),
           ],
         ),
@@ -482,36 +460,14 @@ Terms & Conditions of Sale Policy
             children: [
               GestureDetector(
                 onTap: placeholderCallbackForButtons,
-                child: Image.network(
-                  'https://cdn-icons-png.flaticon.com/512/733/733547.png',
-                  width: 28,
-                  height: 28,
-                  fit: BoxFit.contain,
-                  errorBuilder: (c, e, s) => Container(
-                    width: 28,
-                    height: 28,
-                    color: Colors.grey[300],
-                    child: const Icon(Icons.facebook, size: 18),
-                  ),
-                ),
+                child: const Icon(Icons.facebook, size: 18),
               ),
               const SizedBox(width: 12),
               GestureDetector(
                 onTap: placeholderCallbackForButtons,
-                child: Image.network(
-                  'https://cdn-icons-png.flaticon.com/512/733/733579.png',
-                  width: 28,
-                  height: 28,
-                  fit: BoxFit.contain,
-                  errorBuilder: (c, e, s) => Container(
-                    width: 28,
-                    height: 28,
-                    color: Colors.grey[300],
-                    child: const Icon(Icons.alternate_email, size: 18),
-                  ),
-                ),
+                child: const Icon(Icons.alternate_email, size: 18),
               ),
-            ],
+            ]
           ),
           const SizedBox(height: 12),
           const Text(
