@@ -110,7 +110,7 @@ Widget buildHeaderDesktop(BuildContext context) {
                           minWidth: 32,
                           minHeight: 32,
                         ),
-                        onPressed: () {},
+                        onPressed: () => context.go('/cart'),
                       ),
                       IconButton(
                         icon: const Icon(
@@ -216,7 +216,7 @@ Widget buildHeaderMobile(BuildContext context) {
                     height: 44,
                     child: IconButton(
                       icon: const Icon(Icons.shopping_bag_outlined),
-                      onPressed: () {},
+                      onPressed: () => context.go('/cart'),
                       tooltip: 'Bag',
                       padding: const EdgeInsets.all(8),
                       constraints:

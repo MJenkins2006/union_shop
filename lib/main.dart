@@ -6,6 +6,7 @@ import 'package:union_shop/views/collections_screen.dart';
 import 'package:union_shop/views/personalisation_screen.dart';
 import 'package:union_shop/views/personalisation_about_screen.dart';
 import 'package:union_shop/views/collection_screen.dart';
+import 'package:union_shop/views/cart_screen.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
@@ -57,6 +58,10 @@ class UnionShopApp extends StatelessWidget {
             final collectionId = Uri.decodeComponent(rawCollectionId);
             return ProductScreen(collectionId: collectionId, productId: productId);
           },
+        ),
+        GoRoute(
+          path: '/cart',
+          builder: (context, state) => const CartScreen(),
         ),
       ],
     );
