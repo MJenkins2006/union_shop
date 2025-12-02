@@ -12,6 +12,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final cart = CartModel.instance;
+  final TextEditingController _notesController = TextEditingController();
 
   @override
   void initState() {
@@ -22,6 +23,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void dispose() {
     cart.removeListener(_onCartChanged);
+    _notesController.dispose();
     super.dispose();
   }
 
@@ -144,6 +146,19 @@ class _CartScreenState extends State<CartScreen> {
                       },
                     ),
                     const SizedBox(height: 12),
+                    // Notes entry before checkout
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextField(
+                        controller: _notesController,
+                        maxLines: 1,
+                        decoration: const InputDecoration(
+                          labelText: 'Order notes (optional)',
+                          hintText: 'Add any special instructions for your order',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
                     Align(
                       alignment: Alignment.center,
                       child: ConstrainedBox(
@@ -169,10 +184,12 @@ class _CartScreenState extends State<CartScreen> {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       final hadItems = !cart.isEmpty;
+                                      final notes = _notesController.text.trim();
                                       cart.clear();
+                                      _notesController.clear();
                                       if (hadItems) {
                                         ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(content: Text('Checkout complete')),
+                                          SnackBar(content: Text(notes.isNotEmpty ? 'Checkout complete — note saved' : 'Checkout complete')),
                                         );
                                       }
                                     },
