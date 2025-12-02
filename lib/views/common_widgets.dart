@@ -229,63 +229,83 @@ Widget buildHeaderMobile(BuildContext context) {
                     child: IconButton(
                       icon: const Icon(Icons.menu),
                       onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (ctx) {
-                            return SafeArea(
-                              child: SingleChildScrollView(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Divider(),
-                                      ListTile(
-                                        title: const Text('Home'),
-                                        onTap: () {
-                                          Navigator.pop(ctx);
-                                          context.go('/');
-                                        },
+                          showGeneralDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            barrierLabel: 'Menu',
+                            barrierColor: Colors.black54,
+                            transitionDuration: const Duration(milliseconds: 300),
+                            pageBuilder: (dialogContext, anim1, anim2) {
+                              return SafeArea(
+                                child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Material(
+                                    color: Colors.white,
+                                    child: SingleChildScrollView(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Divider(),
+                                            ListTile(
+                                              title: const Text('Home'),
+                                              onTap: () {
+                                                Navigator.pop(dialogContext);
+                                                context.go('/');
+                                              },
+                                            ),
+                                            ListTile(
+                                              title: const Text('Shop'),
+                                              onTap: () {
+                                                Navigator.pop(dialogContext);
+                                                context.go('/collections');
+                                              },
+                                            ),
+                                            ListTile(
+                                              title: const Text('The Print Shack'),
+                                              onTap: () {
+                                                Navigator.pop(dialogContext);
+                                                context.go('/personalisation');
+                                              },
+                                            ),
+                                            ListTile(
+                                              title: const Text('SALE!'),
+                                              onTap: () {
+                                                Navigator.pop(dialogContext);
+                                                context.go('/collections/sales');
+                                              },
+                                            ),
+                                            ListTile(
+                                              title: const Text('About'),
+                                              onTap: () {
+                                                Navigator.pop(dialogContext);
+                                                context.go('/about');
+                                              },
+                                            ),
+                                            const SizedBox(height: 16),
+                                          ],
+                                        ),
                                       ),
-                                      ListTile(
-                                        title: const Text('Shop'),
-                                        onTap: () {
-                                          Navigator.pop(ctx);
-                                          context.go('/collections');
-                                        },
-                                      ),
-                                      ListTile(
-                                        title: const Text('The Print Shack'),
-                                        onTap: () {
-                                          Navigator.pop(ctx);
-                                          context.go('/personalisation');
-                                        },
-                                      ),
-                                      ListTile(
-                                        title: const Text('SALE!'),
-                                        onTap: () {
-                                          Navigator.pop(ctx);
-                                          context.go('/collections/sales');
-                                        },
-                                      ),
-                                      ListTile(
-                                        title: const Text('About'),
-                                        onTap: () {
-                                          Navigator.pop(ctx);
-                                          context.go('/about');
-                                        },
-                                      ),
-                                      const SizedBox(height: 16),
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      },
+                              );
+                            },
+                            transitionBuilder:
+                                (context, animation, secondaryAnimation, child) {
+                              final offsetTween =
+                                  Tween(begin: const Offset(0, -1), end: Offset.zero)
+                                      .chain(CurveTween(curve: Curves.easeOut));
+                              return SlideTransition(
+                                position: animation.drive(offsetTween),
+                                child: child,
+                              );
+                            },
+                          );
+                        },
                     ),
                   ),
                 ],
