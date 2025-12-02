@@ -174,3 +174,56 @@ Testing
 - `flutter analyze`
 - `flutter test`
 - `flutter run -d chrome` and verify `http://localhost:xxxx/#/collections/Cards` displays `Cards page`.
+
+---
+
+# Cart Page — LLM Prompt
+
+Goal: Add a responsive, accessible Cart page and connect Add-to-Cart actions so that when a user taps "Add to cart" they are taken to the new Cart screen which lists items and supports a non-payment "Checkout" that clears the cart.
+
+Files to edit / create:
+- `lib/views/cart_screen.dart` — create the `CartScreen` widget and UI.
+- `lib/views/product_screen.dart` (or where Add-to-Cart lives) — ensure add-to-cart handler navigates to the `CartScreen` after adding the item. If the project already has a central cart model, update the existing add-to-cart callback to use `context.go('/cart')` (when using `go_router`) or the app's equivalent routing call.
+
+Context & assumptions:
+- The app already has product pages with an "Add to cart" button. Preserve existing product data flow (color, size, name, price).
+- No real payments are required — the Checkout button simply clears the cart state and shows a confirmation.
+- Keep naming consistent: prefer `CartScreen` and route `/cart` (or adapt to the app's existing router scheme).
+
+Requirements / Acceptance Criteria
+- When user taps "Add to cart" on a product, the product (with selected color and size if provided) is added to the cart and the app navigates to the `CartScreen`.
+- The `CartScreen` lists each cart item with: color (if applicable), size (if applicable), product name, quantity (default 1), and price for that item. Show line total (price × quantity) and a cart total at the bottom.
+- Provide a `Checkout` button that clears the cart contents (no external payment integration) and shows a short success `SnackBar` or dialog.
+- Provide a `Remove` or `Delete` affordance for each cart item to remove it from the cart.
+- The cart UI must be responsive: on narrow screens (<600 logical px) stack content vertically, ensure touch targets >=44×44 logical px, and avoid horizontal overflow.
+- Preserve existing navigation helpers and patterns (e.g., `navigateToHome` or `context.go` when the app uses `go_router`); do not rename them.
+
+Implementation guidance (for the LLM developer):
+- Cart state: implement a minimal in-memory cart for this task (e.g., a simple `List<CartItem>` stored in a singleton, `InheritedWidget`, or a small `ChangeNotifier` provider). Keep this local and minimal — prefer a `CartModel` with pure functions like `addItem`, `removeItem`, `clear` so unit testing is easy.
+- `CartItem` shape should include at least: `id`, `name`, `price`, `color` (nullable), `size` (nullable), `quantity`.
+- Routing: register a `/cart` route (or use existing router conventions). If the app uses `go_router`, add the route and prefer `context.go('/cart')` for navigation; otherwise follow the app's existing routing style (named routes or `onGenerateRoute`).
+- Accessibility: wrap meaningful UI with `Semantics` labels (e.g., `"Cart item: <name>"`) and ensure `Checkout` and `Remove` buttons are large enough.
+- UI specifics: show a scrollable `ListView` of items, a sticky bottom area with `Cart Total` and `Checkout` button, and a fallback empty-state view when the cart is empty with a button to `Continue shopping` (navigates Home).
+
+Edge cases & constraints:
+- Products may not have color or size — show a small `—` or omit that row when absent.
+- Support multiple items; summation should use precise `double` arithmetic and format currency with the app's existing formatting conventions.
+- Do not integrate payments or external APIs.
+
+Acceptance test checklist (manual):
+- Add an item from a product page with color and size. Verify the app navigates to the cart and the item shows name, color, size, price.
+- Add a second item; verify the list updates and totals update.
+- Tap `Remove` on an item; verify it disappears and totals update.
+- Tap `Checkout`; verify the cart is cleared and a confirmation appears (SnackBar or dialog).
+- Verify layout on narrow viewport (mobile) does not overflow and buttons are tappable.
+
+Quick test/run commands (PowerShell):
+```powershell
+flutter pub get
+flutter analyze
+flutter test
+flutter run -d chrome
+```
+
+---
+
