@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/views/common_widgets.dart';
-import 'package:union_shop/database.dart';
 import 'package:go_router/go_router.dart';
 
 enum LineCount { one, two , three, four }
@@ -122,6 +121,10 @@ class _PersonalisationScreenState extends State<PersonalisationScreen> {
                           const SizedBox(height: 6),
                           const Text('Tax included.'),
                           const SizedBox(height: 12),
+                          ElevatedButton(
+                            onPressed: () => context.go('/personalisation/about'),
+                            child: const Text('Find out more!')),
+                          const SizedBox(height: 16),
                           Row(
                             children: [
                               const Text('Number of lines: ', style: TextStyle(fontSize: 16)),
