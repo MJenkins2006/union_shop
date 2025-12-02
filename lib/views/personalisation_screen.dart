@@ -16,6 +16,25 @@ class _PersonalisationScreenState extends State<PersonalisationScreen> {
 
   LineCount _selectedLineCount = LineCount.one;
 
+  // Controllers for each potential line of personalisation (max 4)
+  final List<TextEditingController> _lineControllers = List.generate(
+    4,
+    (_) => TextEditingController(),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    for (final controller in _lineControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
   List<DropdownMenuItem<LineCount>> _buildLineCountEntries() {
     return [
       const DropdownMenuItem<LineCount>(
@@ -35,6 +54,29 @@ class _PersonalisationScreenState extends State<PersonalisationScreen> {
 
   int _quantity = 1;
   final double _controlHeight = 36.0;
+
+  Widget _buildLineEntryFields() {
+    final int count = _selectedLineCount.index + 1;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(count, (i) {
+        return Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: TextField(
+            controller: _lineControllers[i],
+            decoration: InputDecoration(
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0)),
+              labelText: 'Line ${i + 1}',
+              hintText: 'Enter text for line ${i + 1}',
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+            ),
+            maxLines: 1,
+            maxLength: 10,
+          ),
+        );
+      }),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +154,7 @@ class _PersonalisationScreenState extends State<PersonalisationScreen> {
                               ),
                             ],
                           ),
+                          const SizedBox(height: 12),
                           Row(
                             children: [
                               const Text('Quantity: ', style: TextStyle(fontSize: 16)),
@@ -151,6 +194,13 @@ class _PersonalisationScreenState extends State<PersonalisationScreen> {
                               ),
                             ]
                           ),
+
+                          // Entry boxes for each selected line
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12.0),
+                            child: _buildLineEntryFields(),
+                          ),
+
                           ElevatedButton(
                             onPressed: () => print('Button pressed'),
                             style: ElevatedButton.styleFrom(
