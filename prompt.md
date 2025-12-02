@@ -227,3 +227,70 @@ flutter run -d chrome
 
 ---
 
+
+# Image Generation & Asset Migration Prompt (for another LLM)
+
+Task
+
+- Replace all externally-hosted images used by the app (e.g., `Image.network(...)`, hardcoded image URLs in code or templates) with locally generated asset images placed under `assets/images`.
+
+Context & constraints
+
+- The repository currently references network images for product, collection, and other UI imagery. The developer prefers generated, local images in `assets/images` instead of remote URLs. The `pubspec.yaml` already includes the `assets/images` path, but your run should verify and update it only if necessary.
+- Do not change app visual design except to replace `Image.network` with `Image.asset` equivalents and to keep aspect ratios and semantics intact.
+- Preserve existing widget parameters (boxFit, width, height, alignment), navigation helpers, and accessibility semantics.
+
+What you must do
+
+1. Scan the repository (all `lib/` files, templates, and assets references) and collect a complete list of unique external image URLs and their code locations.
+2. For each unique external image, generate a new image file and save it to `assets/images/` using a safe, descriptive filename (lowercase, hyphens, e.g. `product-card-rose.png`, `collection-cards.jpg`). Prefer PNG for UI elements and JPEG for full-bleed photographic images. Include a short plain-text mapping table in your patch that lists each original URL → new filename → brief description (colors, subject, recommended focal area/aspect ratio).
+3. Replace each `Image.network('<url>'...)` (and other direct URL uses) with `Image.asset('assets/images/<new-filename>'...)`, preserving any sizing, `fit`, and other parameters. If the original code used `Image.network` with `loadingBuilder` or `errorBuilder`, preserve equivalent behavior (e.g., keep `placeholder` widgets or a small fallback `Icon` and retain `errorBuilder` logic). Keep semantics labels and `GestureDetector` handlers intact.
+4. Ensure any large full-bleed images (e.g., the Collections slide) use `assets/images/collections.jpg` with an appropriate aspect ratio (`16:7` recommended for the home carousel); create and reference that file specifically.
+5. Optimize generated images for web: reasonable resolutions (e.g., width 1200–1600px for full-bleed, 600–800px for card thumbnails), sRGB, and compressed sizes under ~200KB where possible. If you include 2x assets for high-DPI, follow Flutter asset conventions (`assets/images/2.0x/...`) — optional but document what you added.
+6. Verify `pubspec.yaml` includes the `assets/images` path; update only if it is missing and include the exact small patchlines you would add.
+7. Provide a single patch (diff) that: adds the new image files to `assets/images/` (binary placeholders or clearly-named stubs if you cannot embed binaries), updates code locations to use `Image.asset`, and optionally updates `pubspec.yaml` if required.
+
+Acceptance criteria
+
+- No remaining references to external image URLs in `lib/` source (search `Image.network(` and raw `http://`/`https://` strings to confirm).
+- All replaced widgets load assets from `assets/images/<filename>` and preserve previous layout and accessibility.
+- Full-bleed collection image referenced as `assets/images/collections.jpg` and used in the home carousel slide.
+- If actual image binary content cannot be embedded, your patch must include clear filenames and a mapping table plus instructions for the developer to add the generated files into `assets/images/` (include suggested commands and expected file sizes/resolutions).
+
+Deliverables
+
+- A markdown summary at the top of your answer listing all replaced URLs and their new filenames and descriptions.
+- A patch (or series of patches) that: replaces `Image.network` calls with `Image.asset` references across the codebase and updates `pubspec.yaml` if needed.
+- The generated image files placed under `assets/images/` (or, if binaries cannot be embedded here, include a separate ZIP or a clear list and instructions for where to drop the files).
+- A brief verification checklist and exact commands to run:
+
+```powershell
+flutter pub get
+flutter analyze
+flutter test
+flutter run -d chrome
+```
+
+Notes for the implementer / LLM
+
+- If you cannot create binary image files inside this code patch, include named, high-quality placeholder images (e.g., SVG or text stub files) and a clear table that instructs the human developer how to replace them with final generated images. Use descriptive filenames so the developer or asset pipeline can regenerate consistent images offline.
+- Keep tappable areas and semantics. If replacing images inside buttons or tappable cards, ensure the widget still has the appropriate `Semantics` label.
+- Minimize code changes: update only the lines needed to switch from network to asset usage. Keep function names and navigation helpers unchanged.
+- If you add or rename assets, update `pubspec.yaml` only to ensure `assets/images/` is listed; do not add a long list of individual files unless necessary.
+
+Edge cases
+
+- For any image URL that is used in multiple places, re-use the single asset filename and preserve aspect-ratio cropping via widget parameters rather than creating duplicates.
+- If some images are truly dynamic (user-uploaded, remote CDN renders that vary by product), note those as exceptions and provide a suggested migration strategy (e.g., a small fallback asset, or a server-side sync workflow) rather than forcing them into `assets/images`.
+
+Testing checklist (manual)
+
+- Search the repository for `Image.network(` and `http`/`https` strings — confirm none remain in `lib/`.
+- Run `flutter analyze` and `flutter test` and fix any analyzer issues introduced by the replacements.
+- Start the app (`flutter run -d chrome`) and verify in both desktop and mobile widths that images load correctly, aspect ratios are preserved, and the home carousel shows the `collections.jpg` image.
+
+If you modify files other than image files and `pubspec.yaml`, explain why in 2–3 bullets at the top of your patch.
+
+---
+
+End of prompt.
