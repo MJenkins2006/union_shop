@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/views/common_widgets.dart';
+import 'package:union_shop/models/cart_model.dart';
 import 'package:union_shop/database.dart';
 import 'package:go_router/go_router.dart';
 
@@ -262,7 +263,35 @@ class _ProductScreenState extends State<ProductScreen> {
                             ]
                           ),
                           ElevatedButton(
-                            onPressed: () => print('Button pressed'),
+                            onPressed: () {
+                              // add to cart and navigate to cart screen
+                              final unitPrice = double.parse(product['price']?.split(' ').last ?? '0');
+
+                              // derive available colours/sizes from product data
+                              final coloursList = (product['colours'] ?? '')
+                                  .split(',')
+                                  .map((c) => c.trim())
+                                  .where((c) => c.isNotEmpty)
+                                  .toList();
+                              final sizesList = (product['sizes'] ?? '')
+                                  .split(',')
+                                  .map((s) => s.trim())
+                                  .where((s) => s.isNotEmpty)
+                                  .toList();
+
+                              final selectedColour = _selectedColour ?? (coloursList.isNotEmpty ? coloursList[0] : null);
+                              final selectedSize = _selectedSize ?? (sizesList.isNotEmpty ? sizesList[0] : null);
+
+                              final cartItem = CartItem(
+                                name: product['product'] ?? '',
+                                price: unitPrice,
+                                color: selectedColour,
+                                size: selectedSize,
+                                quantity: _quantity,
+                              );
+                              CartModel.instance.addItem(cartItem);
+                              context.go('/cart');
+                            },
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 64, vertical: 12.0),
