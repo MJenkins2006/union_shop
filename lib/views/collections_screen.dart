@@ -159,8 +159,8 @@ class CollectionCard extends StatelessWidget {
                 ),
               ),
               child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(0, 0, 0, 0.7),
                 ),
               ),
             ),
