@@ -88,9 +88,9 @@ class _CollectionScreenState extends State<CollectionScreen> {
       const DropdownMenuItem<PriceFilter>(
           value: PriceFilter.all, child: Text('All', style: TextStyle(fontSize: 14))),
       const DropdownMenuItem<PriceFilter>(
-          value: PriceFilter.under10, child: Text('Under \$10', style: TextStyle(fontSize: 14))),
+          value: PriceFilter.under10, child: Text('Under £10', style: TextStyle(fontSize: 14))),
       const DropdownMenuItem<PriceFilter>(
-          value: PriceFilter.over10, child: Text('Over \$10', style: TextStyle(fontSize: 14))),
+          value: PriceFilter.over10, child: Text('Over £10', style: TextStyle(fontSize: 14))),
     ];
   }
 
