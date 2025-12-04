@@ -1,5 +1,7 @@
 # Union Shop
 
+![A Screnshot of the home screen](./assets/images/home_screen.png)
+
 Union Shop is a Flutter-based e-commerce demo app showcasing a small shop UI with product collections and cart management for a year 2 coursework.
 
 **Quick snapshot**: a lightweight, cross-platform Flutter project (Android, iOS, web, desktop) used for learning and prototyping storefront flows made with the help of AI.
@@ -48,11 +50,11 @@ flutter test --coverage
 		- `about_screen.dart` — About page: fake app details and creator/contact information.
 		- `authentication.dart` — Authentication flows: sign-in / sign-up UI and helpers.
 		- `cart_screen.dart` — Cart view: list items, change quantities, view totals and checkout summary.
-        ![A Screnshot of the cart](./assets/images/cart_screen.png)
+        ![A Screnshot of the cart screen](./assets/images/cart_screen.png)
 		- `collection_screen.dart` — Single collection: shows products within a selected collection.
-        ![A Screnshot of the products](./assets/images/collection_screen.png)
+        ![A Screnshot of the collection screen](./assets/images/collection_screen.png)
 		- `collections_screen.dart` — Collections browse: lists available product collections.
-        ![A Screnshot of the collections](./assets/images/collections_screen.png)
+        ![A Screnshot of the collections screen](./assets/images/collections_screen.png)
 		- `common_widgets.dart` — Shared widgets used across screens (product tiles, buttons, headers).
 		- `home_screen.dart` — Home / landing screen with featured collections and product highlights.
 		- `personalisation_about_screen.dart` — Details page describing personalization features.
