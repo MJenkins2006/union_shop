@@ -294,3 +294,69 @@ If you modify files other than image files and `pubspec.yaml`, explain why in 2�
 ---
 
 End of prompt.
+
+# LLM Task: Generate README.md for `union_shop`
+
+Context
+-------
+
+I have just finished my union shop website. Create a README in markdown format and place the content into a file at `README.md` in the project root. I will add images to the repository later — include image placeholders and example alt text where appropriate.
+
+Instructions for you (the LLM)
+--------------------------------
+
+- Output only the full markdown content for the README (no surrounding commentary), ready to be saved into `README.md`.
+- Do not modify any other repository files.
+- Include clear placeholders for images, e.g. `![Home screen placeholder](assets/images/home.png)` and a short note telling the developer to replace those placeholders with actual images later.
+- Keep language concise, professional, and developer-friendly.
+
+Suggested README structure (required sections)
+---------------------------------------------
+
+1. Project Title and one-line description
+2. Badges (optional) — you may include placeholders like `![build]()`
+3. Table of Contents (linkable headings)
+4. Features — short bullet list of key features
+5. Screenshots / Images — placeholders and guidance (note: images will be added later)
+6. Getting Started
+	- Prerequisites
+	- Install / Setup
+	- Common commands to run (exact commands listed below)
+7. Development
+	- How to run locally
+	- How to run tests
+8. Project Structure — brief overview of key folders/files
+9. Contributing — short note and link to issue/PR process
+10. License — short placeholder (e.g., "MIT" or ask developer to add)
+11. Contact / Author
+
+Exact commands to include in README's "Getting Started" and "Development" sections
+----------------------------------------------------------------------------------
+
+```powershell
+flutter pub get
+flutter run -d chrome
+```
+
+Notes for images/placeholders
+----------------------------
+
+- Use relative `assets/images/...` paths for image placeholders.
+- For each placeholder include a small caption describing what should be captured (e.g., "Home screen — hero and nav").
+- Mention recommended image sizes (e.g., full-bleed hero ~1200×525 px, thumbnails ~600×400 px) and that the developer will add the actual assets later.
+
+Acceptance criteria for your output
+----------------------------------
+
+- Valid Markdown with the sections above present and a Table of Contents linking to each major heading.
+- No inline images embedded — only placeholders with relative paths and alt text.
+- Clear example commands (see the commands block above).
+- File content is ready to be saved directly into `README.md`.
+
+Tone and formatting
+-------------------
+
+- Use clear headings, short paragraphs, and bullet lists.
+- Keep the README concise (aim for ~200–600 words), but include all required sections and sample commands.
+
+End of task.
