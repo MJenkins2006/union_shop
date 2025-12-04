@@ -172,6 +172,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               }),
                             ]
                           ),
+                          const SizedBox(height: 12),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -223,6 +224,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               }),
                             ]
                           ),
+                          const SizedBox(height: 12),
                           Row(
                             children: [
                               const Text('Quantity: ', style: TextStyle(fontSize: 16)),
@@ -262,6 +264,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               ),
                             ]
                           ),
+                          const SizedBox(height: 12),
                           ElevatedButton(
                             onPressed: () {
                               // add to cart and navigate to cart screen
